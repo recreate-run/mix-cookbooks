@@ -14,9 +14,40 @@ Mix is an agentic platform built for multimodal workflows:
 
 ## Prerequisites
 
-- Mix Agent running (locally or deployed)
 - Python 3.10+ or Node.js 18+
 - API Keys: Anthropic, Gemini, Brave
+
+## Getting Started
+
+### Option 1: Binary (Recommended for Users)
+
+Download and run the Mix agent binary:
+
+```bash
+# Start Mix agent (downloads binary automatically)
+./start_mix.sh
+
+# Configure environment
+cp .env.example .env
+# Edit .env and add your API keys
+```
+
+The binary runs on port 8088 by default.
+
+### Option 2: Development Mode (For Mix Contributors)
+
+Clone and run Mix from source:
+
+```bash
+# Clone Mix repository
+git clone https://github.com/recreate-run/mix.git
+cd mix
+
+# Start development server
+make dev
+```
+
+This runs Mix with hot-reloading and development tools.
 
 ## Examples
 
