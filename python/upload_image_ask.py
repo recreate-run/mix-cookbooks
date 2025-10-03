@@ -3,13 +3,17 @@
 
 from mix_python_sdk import Mix
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from utils import stream_message
 
 
 def upload_sample_image(mix, session_id: str) -> str:
     """Upload sample.jpg to the session"""
-    image_path = "examples/sample_files/sample.jpg"
+    # Get the path to sample_files directory relative to this script
+    script_dir = Path(__file__).parent
+    image_path = script_dir / "../sample_files/sample.jpg"
+    image_path = image_path.resolve()
 
     with open(image_path, "rb") as f:
         image_file_info = mix.files.upload_session_file(
