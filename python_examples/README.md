@@ -20,7 +20,23 @@ GEMINI_API_KEY=your_key_here
 BRAVE_API_KEY=your_key_here
 ```
 
-## Examples
+## Run server
+
+### With devools GUI (recommended)
+
+```bash
+git clone https://github.com/recreate-run/mix.git
+cd mix
+make dev
+```
+
+### Without devools GUI
+
+```bash
+./start_mix.sh
+```
+
+## Run demos
 
 ### `portfolio_analysis.py`
 

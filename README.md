@@ -19,7 +19,7 @@ Mix is an agentic platform built for multimodal workflows:
 
 ## Examples
 
-Examples are in the [`python/`](./python) folder, written with the [Python SDK](https://github.com/recreate-run/mix-python-sdk). See:
+Examples are in the [`python_examples/`](./python) folder, written with the [Python SDK](https://github.com/recreate-run/mix-python-sdk). See:
 
 - [Portfolio Analysis](./python/portfolio_analysis.py) - AI-powered CSV analysis and visualizations
 - [TikTok Video](./python/tiktok_video.py) - Text-to-video generation workflows
