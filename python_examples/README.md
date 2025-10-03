@@ -1,9 +1,5 @@
 # Mix Python Cookbooks
 
-Creative and advanced examples for building with Mix Python SDK.
-
-> **Note**: For basic examples (authentication, sessions, messages, files, etc.), see the [Python SDK examples](https://github.com/recreate-run/mix-python-sdk/tree/main/examples).
-
 ## Setup
 
 ```bash
@@ -11,7 +7,7 @@ cd python
 ./scripts/setup.sh
 ```
 
-Then add your credentials to `../.env`:
+Then add your credentials in the generated `.env` file:
 
 ```bash
 MIX_SERVER_URL=http://localhost:8088

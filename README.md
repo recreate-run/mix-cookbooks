@@ -29,7 +29,7 @@ Examples are in the [`python_examples/`](./python) folder, written with the [Pyt
 
 For TypeScript, see the [Mix devtools source code](https://github.com/recreate-run/mix) as a reference. Typescript examples are coming soon.
 
-> **Note**: For basic examples (authentication, sessions, messages, files), see the [Python SDK](https://github.com/recreate-run/mix-python-sdk/tree/main/examples) or [TypeScript SDK](https://github.com/recreate-run/mix-typescript-sdk) repositories.
+> **Note**: For API usage examples (authentication, sessions, messages, files), see the [Python SDK](https://github.com/recreate-run/mix-python-sdk/tree/main/examples).
 
 ## Resources
 

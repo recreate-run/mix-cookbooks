@@ -12,6 +12,15 @@ cd "$PYTHON_DIR"
 
 echo "🔧 Setting up Mix Python Cookbooks..."
 
+# Check if uv is installed, if not install it
+if ! command -v uv &> /dev/null; then
+  echo "📦 uv not found. Installing uv..."
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  echo "✓ uv installed successfully"
+else
+  echo "✓ uv already installed"
+fi
+
 # Create virtual environment
 echo "📦 Creating virtual environment..."
 uv venv
