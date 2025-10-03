@@ -17,7 +17,7 @@ def main():
         mix.authentication.store_api_key(api_key=api_key, provider="openrouter")
         mix.preferences.update_preferences(
             preferred_provider="openrouter",
-            main_agent_model="openrouter.deepseek-v3.1",
+            main_agent_model="openrouter.zai-glm-4.6",
         )
         session = mix.sessions.create(title="Portfolio Analysis Q4 2024")
 

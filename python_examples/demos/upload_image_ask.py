@@ -5,14 +5,14 @@ from mix_python_sdk import Mix
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from python.demos.utils import stream_message
+from utils import stream_message
 
 
 def upload_sample_image(mix, session_id: str) -> str:
     """Upload sample.jpg to the session"""
     # Get the path to sample_files directory relative to this script
     script_dir = Path(__file__).parent
-    image_path = script_dir / "../sample_files/sample.jpg"
+    image_path = script_dir / "../../sample_files/sample.jpg"
     image_path = image_path.resolve()
 
     with open(image_path, "rb") as f:
@@ -39,7 +39,7 @@ def main():
         mix.authentication.store_api_key(api_key=api_key, provider="openrouter")
         mix.preferences.update_preferences(
             preferred_provider="openrouter",
-            main_agent_model="openrouter.deepseek-v3.1",
+            main_agent_model="openrouter.zai-glm-4.6",
         )
 
         # session creation
