@@ -50,7 +50,7 @@ def main():
             "OPENROUTER_API_KEY not found in environment variables. Please add it to your .env file."
         )
 
-    server_url = os.getenv("MIX_SERVER_URL", "http://localhost:8088")
+    server_url = os.getenv("MIX_SERVER_URL")
 
     with Mix(server_url=server_url) as mix:
         health = mix.system.get_health()

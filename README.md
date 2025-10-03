@@ -2,11 +2,10 @@
 
 Creative and advanced examples for building with [Mix](https://github.com/recreate-run/mix).
 
-> **Note**: For basic examples (authentication, sessions, messages, files), see the [Python SDK](https://github.com/recreate-run/mix-python-sdk/tree/main/examples) or [TypeScript SDK](https://github.com/recreate-run/mix-typescript-sdk) repositories.
-
 ## What is Mix?
 
 Mix is an agentic platform built for multimodal workflows:
+
 - Session-based persistent state
 - Real-time streaming (SSE)
 - Multimodal (video, images, text)
@@ -14,47 +13,23 @@ Mix is an agentic platform built for multimodal workflows:
 
 ## Prerequisites
 
-- Python 3.10+ or Node.js 18+
-- API Keys: Anthropic, Gemini, Brave
-
-## Getting Started
-
-### Option 1: Binary (Recommended for Users)
-
-Download and run the Mix agent binary:
-
-```bash
-# Start Mix agent (downloads binary automatically)
-./start_mix.sh
-
-# Configure environment
-cp .env.example .env
-# Edit .env and add your API keys
-```
-
-The binary runs on port 8088 by default.
-
-### Option 2: Development Mode (For Mix Contributors)
-
-Clone and run Mix from source:
-
-```bash
-# Clone Mix repository
-git clone https://github.com/recreate-run/mix.git
-cd mix
-
-# Start development server
-make dev
-```
-
-This runs Mix with hot-reloading and development tools.
+- Anthropic API key / Claude code subscription
+- Brave API key for web search tool free ([Get free key](https://brave.com/search/api/))
+- Gemini API key for `ReadMedia` tool ([Get free key](https://aistudio.google.com/api-keys))
 
 ## Examples
 
-📂 **Python** - See [python/](python/) for creative examples including portfolio analysis, video generation, and more
+Examples are in the [`python/`](./python) folder, written with the [Python SDK](https://github.com/recreate-run/mix-python-sdk). See:
 
-📂 **TypeScript** - Coming soon
+- [Portfolio Analysis](./python/portfolio_analysis.py) - AI-powered CSV analysis and visualizations
+- [TikTok Video](./python/tiktok_video.py) - Text-to-video generation workflows
+- [Image Upload](./python/upload_image_ask.py) - Image analysis with vision models
+- [Web Search](./python/web_search_multimodal.py) - Multimodal web search integration
+- [Custom Prompts](./python/system_prompt_change.py) - Dynamic system prompt configuration
 
+For TypeScript, see the [Mix devtools source code](https://github.com/recreate-run/mix) as a reference. Typescript examples are coming soon.
+
+> **Note**: For basic examples (authentication, sessions, messages, files), see the [Python SDK](https://github.com/recreate-run/mix-python-sdk/tree/main/examples) or [TypeScript SDK](https://github.com/recreate-run/mix-typescript-sdk) repositories.
 
 ## Resources
 
@@ -62,7 +37,3 @@ This runs Mix with hot-reloading and development tools.
 - [Mix Repository](https://github.com/recreate-run/mix)
 - [Python SDK](https://github.com/recreate-run/mix-python-sdk)
 - [TypeScript SDK](https://github.com/recreate-run/mix-typescript-sdk)
-
-## License
-
-MIT

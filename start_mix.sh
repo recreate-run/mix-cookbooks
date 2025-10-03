@@ -5,7 +5,6 @@ set -e
 # This script downloads and runs the Mix agent binary
 
 MIX_VERSION="${MIX_VERSION:-latest}"
-MIX_PORT="${MIX_PORT:-8088}"
 MIX_DIR="${HOME}/.mix"
 MIX_BINARY="${MIX_DIR}/mix"
 
@@ -107,6 +106,13 @@ load_env() {
 
 # Start Mix agent
 start_mix() {
+    # Extract port from MIX_SERVER_URL (e.g., http://localhost:8088 -> 8088)
+    if [ -n "${MIX_SERVER_URL}" ]; then
+        MIX_PORT=$(echo "${MIX_SERVER_URL}" | sed -E 's|.*:([0-9]+).*|\1|')
+    else
+        MIX_PORT="8088"
+    fi
+
     echo ""
     echo "🚀 Starting Mix Agent on port ${MIX_PORT}..."
     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -143,7 +149,7 @@ case "${1}" in
         echo ""
         echo "Environment Variables:"
         echo "  MIX_VERSION        Mix version to download (default: latest)"
-        echo "  MIX_PORT           Port to run Mix on (default: 8088)"
+        echo "  MIX_SERVER_URL     Server URL with port (default: http://localhost:8088)"
         echo ""
         exit 0
         ;;
