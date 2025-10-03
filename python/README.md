@@ -25,6 +25,17 @@ BRAVE_API_KEY=your_key_here
 
 ## Examples
 
+### `portfolio_analysis.py`
+Analyze investment portfolio data with AI-powered insights and visualizations. Demonstrates:
+- CSV file upload and analysis
+- Data-driven AI insights (winners/losers, trends)
+- Automated plot generation
+- Financial data analysis workflows
+
+```bash
+python portfolio_analysis.py
+```
+
 ### `tiktok_video.py`
 Generate TikTok-style videos from text prompts. Demonstrates:
 - Video generation workflows
@@ -68,4 +79,7 @@ python system_prompt_change.py
 ## Common Files
 
 - `utils.py` - Shared utilities for streaming message handling
-- `../sample_files/` - Sample images and files used across examples
+- `../sample_files/` - Sample files used across examples:
+  - `sample.jpg` - Sample image for image analysis
+  - `sample.txt` - Sample text file
+  - `Robinhood Portfolio Q4 2024.csv` - Portfolio data for financial analysis

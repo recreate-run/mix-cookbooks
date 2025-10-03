@@ -18,6 +18,12 @@ Mix is an agentic platform built for multimodal workflows:
 - Python 3.10+ or Node.js 18+
 - API Keys: Anthropic, Gemini, Brave
 
+## Examples
+
+📂 **Python** - See [python/](python/) for creative examples including portfolio analysis, video generation, and more
+
+📂 **TypeScript** - Coming soon
+
 
 ## Resources
 
