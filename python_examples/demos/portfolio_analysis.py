@@ -8,16 +8,11 @@ from utils import stream_message
 
 def main():
     load_dotenv()
-
-    api_key = os.getenv("OPENROUTER_API_KEY")
-    if not api_key:
-        raise ValueError("OPENROUTER_API_KEY not found in environment variables")
-
     with Mix(server_url=os.getenv("MIX_SERVER_URL")) as mix:
-        mix.authentication.store_api_key(api_key=api_key, provider="openrouter")
+        # mix.authentication.store_api_key(api_key=api_key, provider="anthropic")
         mix.preferences.update_preferences(
-            preferred_provider="openrouter",
-            main_agent_model="openrouter.zai-glm-4.6",
+            preferred_provider="anthropic",
+            main_agent_model="anthropic.claude-sonnet-4",
         )
         session = mix.sessions.create(title="Portfolio Analysis Q4 2024")
 
@@ -37,7 +32,7 @@ def main():
         stream_message(
             mix,
             session.id,
-            f"Look at my portfolio in the data in @{file_info.url} and find the top winners and losers in Q4. Show the three most relevant plots. Think hard.",
+            f"Look at my portfolio in the data in @{file_info.url} and find the top winners and losers in Q4. Show the three most relevant plots. Think.",
         )
 
 

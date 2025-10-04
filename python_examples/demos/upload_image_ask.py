@@ -36,10 +36,10 @@ def main():
 
     with Mix(server_url=os.getenv("MIX_SERVER_URL")) as mix:
         mix.system.get_health()
-        mix.authentication.store_api_key(api_key=api_key, provider="openrouter")
+        # mix.authentication.store_api_key(api_key=api_key, provider="anthropic")
         mix.preferences.update_preferences(
-            preferred_provider="openrouter",
-            main_agent_model="openrouter.zai-glm-4.6",
+            preferred_provider="anthropic",
+            main_agent_model="claude-sonnet-4-5",
         )
 
         # session creation
