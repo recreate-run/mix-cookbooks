@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Streaming example demonstrating image upload and AI analysis via SSE connection."""
 
 from mix_python_sdk import Mix

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from mix_python_sdk import Mix
 import os
 from pathlib import Path

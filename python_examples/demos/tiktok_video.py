@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Minimal streaming example demonstrating SSE connection, message sending, and event processing."""
 
 from mix_python_sdk import Mix

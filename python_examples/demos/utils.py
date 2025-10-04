@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Shared utilities for Mix Python SDK examples."""
 
 from mix_python_sdk.models import (
