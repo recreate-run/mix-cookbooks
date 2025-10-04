@@ -11,7 +11,7 @@ def main():
         # mix.authentication.store_api_key(api_key=api_key, provider="anthropic")
         mix.preferences.update_preferences(
             preferred_provider="anthropic",
-            main_agent_model="anthropic.claude-sonnet-4",
+            main_agent_model="claude-sonnet-4-5",
         )
         session = mix.sessions.create(title="Portfolio Analysis Q4 2024")
 
@@ -31,7 +31,7 @@ def main():
         stream_message(
             mix,
             session.id,
-            f"Look at my portfolio in the data in @{file_info.url} and find the top winners and losers in Q4. Show the three most relevant plots. Think.",
+            f"Look at my portfolio in the data in @{file_info.url} and find the top winners and losers in Q4. Show the three most relevant plots.",
         )
 
 
