@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
 import asyncio
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 from mix_python_sdk import Mix
-from utils import stream_message
+from mix_python_sdk.helpers import stream_and_send
 
 
 async def main():
@@ -30,10 +29,14 @@ async def main():
                 },
             )
 
-        await stream_message(
+        await stream_and_send(
             mix,
-            session.id,
-            f"Look at my portfolio in the data in @{file_info.url} and find the top winners and losers in Q4. Show the three most relevant plots.",
+            session_id=session.id,
+            message=f"Look at my portfolio in the data in @{file_info.url} and find the top winners and losers in Q4. Show the three most relevant plots.",
+            on_thinking=lambda text: print(text, end="", flush=True),
+            on_content=lambda text: print(text, end="", flush=True),
+            on_tool=lambda tool: print(f"\n🔧 {tool.name}: {tool.status}"),
+            on_error=lambda error: print(f"\n❌ {error}"),
         )
 
 

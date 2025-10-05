@@ -1,11 +1,8 @@
-#!/usr/bin/env python3
-"""Minimal streaming example demonstrating SSE connection, message sending, and event processing."""
-
 import asyncio
 import os
 from dotenv import load_dotenv
 from mix_python_sdk import Mix
-from utils import stream_message
+from mix_python_sdk.helpers import stream_and_send
 
 
 async def main():
@@ -23,7 +20,16 @@ async def main():
 
         # session creation
         session = mix.sessions.create(title="Web search multimodal demo")
-        await stream_message(mix, session.id, user_msg)
+
+        await stream_and_send(
+            mix,
+            session_id=session.id,
+            message=user_msg,
+            on_thinking=lambda text: print(text, end="", flush=True),
+            on_content=lambda text: print(text, end="", flush=True),
+            on_tool=lambda tool: print(f"\n🔧 {tool.name}: {tool.status}"),
+            on_error=lambda error: print(f"\n❌ {error}"),
+        )
 
 
 if __name__ == "__main__":

@@ -1,12 +1,9 @@
-#!/usr/bin/env python3
-"""Streaming example demonstrating image upload and AI analysis via SSE connection."""
-
 import asyncio
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 from mix_python_sdk import Mix
-from utils import stream_message
+from mix_python_sdk.helpers import stream_and_send
 
 
 def upload_sample_image(mix, session_id: str) -> str:
@@ -52,7 +49,15 @@ async def main():
         # Ask about the uploaded image
         user_msg = f"Explain {uploaded_file_url}"
 
-        await stream_message(mix, session.id, user_msg)
+        await stream_and_send(
+            mix,
+            session_id=session.id,
+            message=user_msg,
+            on_thinking=lambda text: print(text, end="", flush=True),
+            on_content=lambda text: print(text, end="", flush=True),
+            on_tool=lambda tool: print(f"\n🔧 {tool.name}: {tool.status}"),
+            on_error=lambda error: print(f"\n❌ {error}"),
+        )
 
 
 if __name__ == "__main__":
