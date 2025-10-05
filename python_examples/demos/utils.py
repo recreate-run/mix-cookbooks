@@ -1,30 +1,24 @@
 """Shared utilities for Mix Python SDK examples."""
 
 from mix_python_sdk.models import (
-    SendMessageRequestBody,
     SSEThinkingEvent,
     SSEContentEvent,
     SSEToolEvent,
     SSEErrorEvent,
-    SSEEventStream,
     SSECompleteEvent,
 )
-import json
 
 
-def stream_message(mix, session_id: str, message: str) -> None:
+async def stream_message(mix, session_id: str, message: str) -> None:
     """Send message via streaming and process events"""
-    stream_response = mix.streaming.stream_events(session_id=session_id)
-    mix.streaming.send_streaming_message(
-        id=session_id,
-        content=json.dumps(SendMessageRequestBody(text=message).model_dump()),
-    )
+    stream_response = await mix.streaming.stream_events_async(session_id=session_id)
 
     thinking_started = content_started = False
 
-    with stream_response.result as event_stream:
-        event: SSEEventStream
-        for event in event_stream:
+    async with stream_response.result as event_stream:
+        await mix.messages.send_async(id=session_id, text=message)
+
+        async for event in event_stream:
             if isinstance(event, SSEThinkingEvent):
                 if not thinking_started:
                     print("🤔 Thinking: ", end="", flush=True)

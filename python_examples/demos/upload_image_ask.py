@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 """Streaming example demonstrating image upload and AI analysis via SSE connection."""
 
-from mix_python_sdk import Mix
+import asyncio
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from mix_python_sdk import Mix
 from utils import stream_message
 
 
@@ -27,13 +29,13 @@ def upload_sample_image(mix, session_id: str) -> str:
     return image_file_info.url
 
 
-def main():
+async def main():
     load_dotenv()
     api_key = os.getenv("OPENROUTER_API_KEY")
     if not api_key:
         raise ValueError("OPENROUTER_API_KEY not found in environment variables")
 
-    with Mix(server_url=os.getenv("MIX_SERVER_URL")) as mix:
+    async with Mix(server_url=os.getenv("MIX_SERVER_URL")) as mix:
         mix.system.get_health()
         # mix.authentication.store_api_key(api_key=api_key, provider="anthropic")
         mix.preferences.update_preferences(
@@ -50,8 +52,8 @@ def main():
         # Ask about the uploaded image
         user_msg = f"Explain {uploaded_file_url}"
 
-        stream_message(mix, session.id, user_msg)
+        await stream_message(mix, session.id, user_msg)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

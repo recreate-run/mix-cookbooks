@@ -1,13 +1,15 @@
-from mix_python_sdk import Mix
+#!/usr/bin/env python3
+import asyncio
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from mix_python_sdk import Mix
 from utils import stream_message
 
 
-def main():
+async def main():
     load_dotenv()
-    with Mix(server_url=os.getenv("MIX_SERVER_URL")) as mix:
+    async with Mix(server_url=os.getenv("MIX_SERVER_URL")) as mix:
         # mix.authentication.store_api_key(api_key=api_key, provider="anthropic")
         mix.preferences.update_preferences(
             preferred_provider="anthropic",
@@ -28,7 +30,7 @@ def main():
                 },
             )
 
-        stream_message(
+        await stream_message(
             mix,
             session.id,
             f"Look at my portfolio in the data in @{file_info.url} and find the top winners and losers in Q4. Show the three most relevant plots.",
@@ -36,4 +38,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
