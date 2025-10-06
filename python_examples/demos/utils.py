@@ -5,7 +5,6 @@ formatting automatically - content line breaks, show_media display, and
 tool output filtering.
 """
 
-import json
 import re
 from mix_python_sdk.helpers import send_with_callbacks
 from mix_python_sdk.tool_models import MediaShowcaseParams
@@ -27,39 +26,23 @@ async def stream_message(mix, session_id: str, message: str) -> None:
         message: Message text to send
     """
 
-    def handle_content(text: str):
-        """Print content with proper line breaks between sentences"""
-        # Add newline after period followed by capital letter (new sentence)
-        text = re.sub(r'(\.)([A-Z])', r'\1\n\2', text)
-        print(text, end="", flush=True)
-
     def handle_tool(tool):
         """Display show_media content using typed models"""
-        # Only process show_media tools - skip others to reduce noise
-        if hasattr(tool, "name") and "show_media" in str(tool.name).lower():
-            if hasattr(tool, "input") and tool.input:
-                try:
-                    # Parse into typed Pydantic model for validation and type safety
-                    params = MediaShowcaseParams.model_validate_json(tool.input)
-                    print("\n")  # Line gap before media
-                    for output in params.outputs:
-                        # Direct attribute access with full type safety
-                        print(f"{output.title}")
-                        if output.description:
-                            print(f"   {output.description}")
-                        if output.path:
-                            print(f"   {output.path}")
-                        print()  # Empty line between each item
-                except ValidationError as e:
-                    print(f"⚠️ Invalid show_media format: {e}")
-                except Exception as e:
-                    print(f"⚠️ Failed to parse show_media: {e}")
+        if not (hasattr(tool, "name") and "show_media" in str(tool.name).lower()):
+            return
+        if not (hasattr(tool, "input") and tool.input):
+            return
 
-    def handle_tool_complete(data):
-        """Display actual tool output (ReadMedia, bash results, etc.)"""
-        # Only show actual output content, skip "Completed X tool" messages
-        if hasattr(data, "progress") and data.progress and "Completed" not in data.progress:
-            print(f"\n\n{data.progress}")
+        try:
+            params = MediaShowcaseParams.model_validate_json(tool.input)
+            print("\n")
+            for output in params.outputs:
+                parts = [output.title]
+                if output.description: parts.append(f"   {output.description}")
+                if output.path: parts.append(f"   {output.path}")
+                print("\n".join(parts) + "\n")
+        except Exception as e:
+            print(f"⚠️ Failed to parse show_media: {e}")
 
     # Use SDK's send_with_callbacks with our custom handlers
     await send_with_callbacks(
@@ -67,8 +50,7 @@ async def stream_message(mix, session_id: str, message: str) -> None:
         session_id=session_id,
         message=message,
         on_thinking=lambda text: print(text, end="", flush=True),
-        on_content=handle_content,
+        on_content=lambda text: print(re.sub(r'(\.)([A-Z])', r'\1\n\2', text), end="", flush=True),
         on_tool=handle_tool,
-        on_tool_execution_complete=handle_tool_complete,
         on_error=lambda error: print(f"\n❌ {error}"),
     )
