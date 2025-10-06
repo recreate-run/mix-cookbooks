@@ -2,11 +2,12 @@
 """Image upload and analysis demo - upload image and ask questions about it."""
 
 import asyncio
-import os
+import os,re
 from pathlib import Path
 from dotenv import load_dotenv
 from mix_python_sdk import Mix
-from utils import stream_message
+from mix_python_sdk.helpers import send_with_callbacks
+from mix_python_sdk.tool_models import MediaShowcaseParams, CoreToolName
 
 
 async def main():
@@ -29,8 +30,20 @@ async def main():
             )
         print(f"Uploaded: {file_info.url}\n")
 
+        def handle_tool(t):
+            if t.name != CoreToolName.SHOW_MEDIA or not t.input: return
+            for o in MediaShowcaseParams.model_validate_json(t.input).outputs:
+                print(f"\n{o.title}\n   {o.description or ''}\n   {o.path or ''}\n")
+
         # Ask about the image
-        await stream_message(mix, session.id, f"Explain {file_info.url}")
+        await send_with_callbacks(
+            mix,
+            session_id=session.id,
+            message=f"Explain {file_info.url}",
+            on_tool=handle_tool,
+            on_content=lambda text: print(re.sub(r'(\.)([A-Z])', r'\1\n\2', text), end="", flush=True),
+            on_error=lambda error: print(f"\n❌ {error}"),
+        )
 
 
 if __name__ == "__main__":

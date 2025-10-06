@@ -2,11 +2,11 @@
 """TikTok video creation demo - find video and create short clip."""
 
 import asyncio
-import os
+import os,re
 from dotenv import load_dotenv
 from mix_python_sdk import Mix
 from mix_python_sdk.helpers import send_with_callbacks
-from mix_python_sdk.tool_models import MediaShowcaseParams
+from mix_python_sdk.tool_models import MediaShowcaseParams, CoreToolName
 
 
 async def main():
@@ -20,8 +20,8 @@ async def main():
 
         session = mix.sessions.create(title="TikTok Video Demo")
 
-        def cb(t):
-            if "show_media" not in t.name.lower() or not t.input: return
+        def handle_tool(t):
+            if t.name != CoreToolName.SHOW_MEDIA or not t.input: return
             for o in MediaShowcaseParams.model_validate_json(t.input).outputs:
                 print(f"\n{o.title}\n   {o.description or ''}\n   {o.path or ''}\n")
 
@@ -29,7 +29,10 @@ async def main():
             mix,
             session_id=session.id,
             message="Find the top cat video and create a 5 sec tiktok video from it. Add a title animation. Export it and show.",
-            on_tool=cb,
+            on_tool=handle_tool,
+            on_content=lambda text: print(re.sub(r'(\.)([A-Z])', r'\1\n\2', text), end="", flush=True),
+            on_error=lambda error: print(f"\n❌ {error}"),
+
         )
 
 
