@@ -5,7 +5,8 @@ import asyncio
 import os
 from dotenv import load_dotenv
 from mix_python_sdk import Mix
-from utils import stream_message
+from mix_python_sdk.helpers import send_with_callbacks
+from mix_python_sdk.tool_models import MediaShowcaseParams
 
 
 async def main():
@@ -19,10 +20,16 @@ async def main():
 
         session = mix.sessions.create(title="TikTok Video Demo")
 
-        await stream_message(
+        def cb(t):
+            if "show_media" not in t.name.lower() or not t.input: return
+            for o in MediaShowcaseParams.model_validate_json(t.input).outputs:
+                print(f"\n{o.title}\n   {o.description or ''}\n   {o.path or ''}\n")
+
+        await send_with_callbacks(
             mix,
-            session.id,
-            "Find the top cat video and create a 5 sec tiktok video from it. Add a title animation. Export it and show."
+            session_id=session.id,
+            message="Find the top cat video and create a 5 sec tiktok video from it. Add a title animation. Export it and show.",
+            on_tool=cb,
         )
 
 
