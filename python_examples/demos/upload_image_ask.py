@@ -49,13 +49,21 @@ async def main():
         # Ask about the uploaded image
         user_msg = f"Explain {uploaded_file_url}"
 
+        def handle_tool_complete(data):
+            """Only show actual tool output content, skip completion messages"""
+            # Only print if there's actual output content (not just completion status)
+            if hasattr(data, "output") and data.output:
+                print(f"\n{data.output}")
+            elif hasattr(data, "result") and data.result:
+                print(f"\n{data.result}")
+
         await stream_and_send(
             mix,
             session_id=session.id,
             message=user_msg,
             on_thinking=lambda text: print(text, end="", flush=True),
             on_content=lambda text: print(text, end="", flush=True),
-            on_tool=lambda tool: print(f"\n🔧 {tool.name}: {tool.status}"),
+            on_tool_execution_complete=handle_tool_complete,
             on_error=lambda error: print(f"\n❌ {error}"),
         )
 
