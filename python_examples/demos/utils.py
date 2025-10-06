@@ -48,6 +48,7 @@ async def stream_message(mix, session_id: str, message: str) -> None:
                                 print(f"   {output['path']}")
                             print()  # Empty line between each item
                 except:
+                    print("⚠️ Failed to parse show_media tool input")
                     pass  # Silently skip malformed tool input
 
     def handle_tool_complete(data):
