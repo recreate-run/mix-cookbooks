@@ -8,6 +8,8 @@ tool output filtering.
 import json
 import re
 from mix_python_sdk.helpers import send_with_callbacks
+from mix_python_sdk.tool_models import MediaShowcaseParams
+from pydantic import ValidationError
 
 
 async def stream_message(mix, session_id: str, message: str) -> None:
@@ -32,24 +34,26 @@ async def stream_message(mix, session_id: str, message: str) -> None:
         print(text, end="", flush=True)
 
     def handle_tool(tool):
-        """Display show_media content (videos, images, plots)"""
+        """Display show_media content using typed models"""
         # Only process show_media tools - skip others to reduce noise
         if hasattr(tool, "name") and "show_media" in str(tool.name).lower():
             if hasattr(tool, "input") and tool.input:
                 try:
-                    input_data = json.loads(tool.input) if isinstance(tool.input, str) else tool.input
-                    if "outputs" in input_data:
-                        print("\n")  # Line gap before media
-                        for output in input_data["outputs"]:
-                            print(f"{output.get('title', 'Media')}")
-                            if output.get('description'):
-                                print(f"   {output['description']}")
-                            if output.get('path'):
-                                print(f"   {output['path']}")
-                            print()  # Empty line between each item
-                except:
-                    print("⚠️ Failed to parse show_media tool input")
-                    pass  # Silently skip malformed tool input
+                    # Parse into typed Pydantic model for validation and type safety
+                    params = MediaShowcaseParams.model_validate_json(tool.input)
+                    print("\n")  # Line gap before media
+                    for output in params.outputs:
+                        # Direct attribute access with full type safety
+                        print(f"{output.title}")
+                        if output.description:
+                            print(f"   {output.description}")
+                        if output.path:
+                            print(f"   {output.path}")
+                        print()  # Empty line between each item
+                except ValidationError as e:
+                    print(f"⚠️ Invalid show_media format: {e}")
+                except Exception as e:
+                    print(f"⚠️ Failed to parse show_media: {e}")
 
     def handle_tool_complete(data):
         """Display actual tool output (ReadMedia, bash results, etc.)"""
