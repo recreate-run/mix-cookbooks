@@ -115,13 +115,13 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mix-python-sdk", specifier = ">=0.6.1" },
+    { name = "mix-python-sdk", specifier = ">=0.6.2" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
 ]
 
 [[package]]
 name = "mix-python-sdk"
-version = "0.6.1"
+version = "0.6.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dotenv" },
@@ -129,9 +129,9 @@ dependencies = [
     { name = "httpx" },
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/37/c2/f9e8bbd3e7062509dfe170c496ae9418eef63ab9ccf206ed920447f78bbf/mix_python_sdk-0.6.1.tar.gz", hash = "sha256:8469956dd2780abcf896d51993dbb4865bc1b2dc8acdfbc0effa305ef4320c4f", size = 67635, upload-time = "2025-10-05T11:45:06.2Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cf/d5/2a5afcdddfae399c6e4fa5a5477aa04002c10baba9fdf095f44cff0e265f/mix_python_sdk-0.6.2.tar.gz", hash = "sha256:551ba7754b6eb395cf60747bf8e09dc94a5cb0fe5c910b1e03566691db1bba3b", size = 67669, upload-time = "2025-10-06T04:17:26.094Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ef/d8/caff3ea66e1e8dbfb112288a669162f48a41d8f09aeecf90b785cd53d651/mix_python_sdk-0.6.1-py3-none-any.whl", hash = "sha256:3b95fb5e3bb637ba6e04fb91a72b9e603f44286910db28381aee3ff88a776cfd", size = 99772, upload-time = "2025-10-05T11:45:04.976Z" },
+    { url = "https://files.pythonhosted.org/packages/64/07/f255d3abbca9a0d31e61be6edb6a7a99f2ec3f8bf2dc84bd9dbd2866b9bf/mix_python_sdk-0.6.2-py3-none-any.whl", hash = "sha256:336b07b2bc244b66a12de7eba1cca8714e6e42293a193c983e6c4ea59f869dcc", size = 99794, upload-time = "2025-10-06T04:17:24.938Z" },
 ]
 
 [[package]]

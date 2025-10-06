@@ -7,7 +7,7 @@ tool output filtering.
 
 import json
 import re
-from mix_python_sdk.helpers import stream_and_send
+from mix_python_sdk.helpers import send_with_callbacks
 
 
 async def stream_message(mix, session_id: str, message: str) -> None:
@@ -57,7 +57,7 @@ async def stream_message(mix, session_id: str, message: str) -> None:
             print(f"\n\n{data.progress}")
 
     # Use SDK's send_with_callbacks with our custom handlers
-    await stream_and_send(
+    await send_with_callbacks(
         mix,
         session_id=session_id,
         message=message,
