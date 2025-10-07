@@ -3,8 +3,8 @@
 ## Setup
 
 ```bash
-cd python
-./scripts/setup.sh
+cd python_examples
+uv sync
 ```
 
 Then add your credentials in the generated `.env` file:
