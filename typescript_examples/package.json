@@ -1,0 +1,21 @@
+{
+  "name": "mix-cookbooks-typescript",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "TypeScript examples for Mix SDK",
+  "scripts": {
+    "demo:portfolio": "bun run demos/portfolio_analysis.ts",
+    "demo:tiktok": "bun run demos/tiktok_video.ts",
+    "demo:image": "bun run demos/upload_image_ask.ts",
+    "demo:web-search": "bun run demos/web_search_multimodal.ts"
+  },
+  "dependencies": {
+    "mix-typescript-sdk": "^0.7.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
