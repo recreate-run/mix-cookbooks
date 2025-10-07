@@ -139,27 +139,3 @@ bun run demos/portfolio_analysis.ts
 3. Add a script entry in `package.json`
 4. Follow the pattern from existing demos
 
-## Architecture
-
-These demos use:
-
-- **mix-typescript-sdk** (v0.7.1) - Official Mix TypeScript SDK
-- **Streaming API** - Real-time event processing
-- **Helper functions** - Simplified callback-based API
-- **TypeScript** - Type-safe development
-- **ESM** - Modern module system
-
-## Comparison with Python Examples
-
-These TypeScript demos mirror the Python examples in `python_examples/demos/`:
-
-| Python | TypeScript | Description |
-|--------|------------|-------------|
-| `portfolio_analysis.py` | `portfolio_analysis.ts` | Portfolio analysis with plots |
-| `tiktok_video.py` | `tiktok_video.ts` | TikTok video creation |
-| `upload_image_ask.py` | `upload_image_ask.ts` | Image upload and Q&A |
-| `web_search_multimodal.py` | `web_search_multimodal.ts` | Web search with video clips |
-
-## License
-
-Same as parent repository.
