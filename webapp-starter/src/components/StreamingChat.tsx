@@ -4,7 +4,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { Loader2 } from 'lucide-react'
-import { ChartDisplay } from './ChartDisplay'
+import { ChartDisplay } from '@/components/ChartDisplay'
 
 interface StreamEvent {
   event: string

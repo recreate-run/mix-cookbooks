@@ -3,7 +3,7 @@
  */
 
 import { createFileRoute } from '@tanstack/react-router'
-import { StreamingChat } from '@/components/portfolio/StreamingChat'
+import { StreamingChat } from '@/components/StreamingChat'
 import { TrendingUp, ArrowLeft } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 

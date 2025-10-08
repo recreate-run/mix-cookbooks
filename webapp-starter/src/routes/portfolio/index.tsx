@@ -4,7 +4,7 @@
 
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { FileUploader } from '@/components/portfolio/FileUploader'
+import { FileUploader } from '@/components/FileUploader'
 import { TrendingUp, Loader2 } from 'lucide-react'
 
 export const Route = createFileRoute('/portfolio/')({
