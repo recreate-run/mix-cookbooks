@@ -6,8 +6,6 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import Header from '../components/Header'
-
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
@@ -29,11 +27,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Mix Webapp Examples',
+        title: 'Portfolio Analyzer - Mix SDK Example',
       },
       {
         name: 'description',
-        content: 'Interactive examples showcasing Mix SDK with TanStack Start - AI-powered web applications with real-time streaming',
+        content: 'AI-powered portfolio analysis with CSV upload, real-time streaming, and visualizations using Mix SDK and TanStack Start',
       },
     ],
     links: [
@@ -68,7 +66,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Header />
         {children}
         <TanStackDevtools
           config={{

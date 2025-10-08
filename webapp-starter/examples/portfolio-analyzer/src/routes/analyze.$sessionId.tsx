@@ -11,7 +11,7 @@ interface AnalyzeSearch {
   fileUrl: string
 }
 
-export const Route = createFileRoute('/portfolio/analyze/$sessionId')({
+export const Route = createFileRoute('/analyze/$sessionId')({
   validateSearch: (search: Record<string, unknown>): AnalyzeSearch => {
     return {
       fileUrl: (search.fileUrl as string) || '',
@@ -32,7 +32,7 @@ function PortfolioAnalyze() {
         {/* Header */}
         <div className="mb-8">
           <Link
-            to="/portfolio"
+            to="/"
             className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 transition-colors mb-4"
             style={{
               color: 'inherit'

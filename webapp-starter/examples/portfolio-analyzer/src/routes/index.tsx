@@ -8,7 +8,7 @@ import { FileUploader } from '@/components/FileUploader'
 import { DataTable } from '@/components/DataTable'
 import { TrendingUp, Loader2 } from 'lucide-react'
 
-export const Route = createFileRoute('/portfolio/')({
+export const Route = createFileRoute('/')({
   component: PortfolioUpload,
 })
 
@@ -86,7 +86,7 @@ function PortfolioUpload() {
 
       // Step 3: Navigate to analysis page
       navigate({
-        to: '/portfolio/analyze/$sessionId',
+        to: '/analyze/$sessionId',
         params: { sessionId },
         search: { fileUrl: uploadData.file.url },
       })

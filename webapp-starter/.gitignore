@@ -1,15 +1,25 @@
-node_modules
-.DS_Store
-dist
-dist-ssr
-*.local
-count.txt
-.env
-.nitro
-.tanstack
-.output
-.vinxi
-todos.json
+# Dependencies
+node_modules/
 
-# Local Netlify folder
-.netlify
+# Build artifacts
+dist/
+.output/
+.netlify/
+.tanstack/
+.vinxi/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db

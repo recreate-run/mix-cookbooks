@@ -10,20 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PortfolioIndexRouteImport } from './routes/portfolio/index'
 import { Route as ApiUploadRouteImport } from './routes/api/upload'
 import { Route as ApiSessionRouteImport } from './routes/api/session'
-import { Route as PortfolioAnalyzeSessionIdRouteImport } from './routes/portfolio/analyze.$sessionId'
+import { Route as AnalyzeSessionIdRouteImport } from './routes/analyze.$sessionId'
 import { Route as ApiStreamSessionIdRouteImport } from './routes/api/stream.$sessionId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PortfolioIndexRoute = PortfolioIndexRouteImport.update({
-  id: '/portfolio/',
-  path: '/portfolio/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiUploadRoute = ApiUploadRouteImport.update({
@@ -36,12 +30,11 @@ const ApiSessionRoute = ApiSessionRouteImport.update({
   path: '/api/session',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PortfolioAnalyzeSessionIdRoute =
-  PortfolioAnalyzeSessionIdRouteImport.update({
-    id: '/portfolio/analyze/$sessionId',
-    path: '/portfolio/analyze/$sessionId',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+const AnalyzeSessionIdRoute = AnalyzeSessionIdRouteImport.update({
+  id: '/analyze/$sessionId',
+  path: '/analyze/$sessionId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiStreamSessionIdRoute = ApiStreamSessionIdRouteImport.update({
   id: '/api/stream/$sessionId',
   path: '/api/stream/$sessionId',
@@ -50,63 +43,56 @@ const ApiStreamSessionIdRoute = ApiStreamSessionIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analyze/$sessionId': typeof AnalyzeSessionIdRoute
   '/api/session': typeof ApiSessionRoute
   '/api/upload': typeof ApiUploadRoute
-  '/portfolio': typeof PortfolioIndexRoute
   '/api/stream/$sessionId': typeof ApiStreamSessionIdRoute
-  '/portfolio/analyze/$sessionId': typeof PortfolioAnalyzeSessionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analyze/$sessionId': typeof AnalyzeSessionIdRoute
   '/api/session': typeof ApiSessionRoute
   '/api/upload': typeof ApiUploadRoute
-  '/portfolio': typeof PortfolioIndexRoute
   '/api/stream/$sessionId': typeof ApiStreamSessionIdRoute
-  '/portfolio/analyze/$sessionId': typeof PortfolioAnalyzeSessionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analyze/$sessionId': typeof AnalyzeSessionIdRoute
   '/api/session': typeof ApiSessionRoute
   '/api/upload': typeof ApiUploadRoute
-  '/portfolio/': typeof PortfolioIndexRoute
   '/api/stream/$sessionId': typeof ApiStreamSessionIdRoute
-  '/portfolio/analyze/$sessionId': typeof PortfolioAnalyzeSessionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/analyze/$sessionId'
     | '/api/session'
     | '/api/upload'
-    | '/portfolio'
     | '/api/stream/$sessionId'
-    | '/portfolio/analyze/$sessionId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/analyze/$sessionId'
     | '/api/session'
     | '/api/upload'
-    | '/portfolio'
     | '/api/stream/$sessionId'
-    | '/portfolio/analyze/$sessionId'
   id:
     | '__root__'
     | '/'
+    | '/analyze/$sessionId'
     | '/api/session'
     | '/api/upload'
-    | '/portfolio/'
     | '/api/stream/$sessionId'
-    | '/portfolio/analyze/$sessionId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyzeSessionIdRoute: typeof AnalyzeSessionIdRoute
   ApiSessionRoute: typeof ApiSessionRoute
   ApiUploadRoute: typeof ApiUploadRoute
-  PortfolioIndexRoute: typeof PortfolioIndexRoute
   ApiStreamSessionIdRoute: typeof ApiStreamSessionIdRoute
-  PortfolioAnalyzeSessionIdRoute: typeof PortfolioAnalyzeSessionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,13 +102,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/portfolio/': {
-      id: '/portfolio/'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof PortfolioIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/upload': {
@@ -139,11 +118,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSessionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/portfolio/analyze/$sessionId': {
-      id: '/portfolio/analyze/$sessionId'
-      path: '/portfolio/analyze/$sessionId'
-      fullPath: '/portfolio/analyze/$sessionId'
-      preLoaderRoute: typeof PortfolioAnalyzeSessionIdRouteImport
+    '/analyze/$sessionId': {
+      id: '/analyze/$sessionId'
+      path: '/analyze/$sessionId'
+      fullPath: '/analyze/$sessionId'
+      preLoaderRoute: typeof AnalyzeSessionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/stream/$sessionId': {
@@ -158,11 +137,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyzeSessionIdRoute: AnalyzeSessionIdRoute,
   ApiSessionRoute: ApiSessionRoute,
   ApiUploadRoute: ApiUploadRoute,
-  PortfolioIndexRoute: PortfolioIndexRoute,
   ApiStreamSessionIdRoute: ApiStreamSessionIdRoute,
-  PortfolioAnalyzeSessionIdRoute: PortfolioAnalyzeSessionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
