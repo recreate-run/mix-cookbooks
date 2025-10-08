@@ -5,6 +5,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { FileUploader } from '@/components/FileUploader'
+import { DataTable } from '@/components/DataTable'
 import { TrendingUp, Loader2 } from 'lucide-react'
 
 export const Route = createFileRoute('/portfolio/')({
@@ -14,12 +15,25 @@ export const Route = createFileRoute('/portfolio/')({
 function PortfolioUpload() {
   const navigate = useNavigate()
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [csvData, setCsvData] = useState<string[][] | null>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleFileSelect = (file: File) => {
+  const handleFileSelect = async (file: File) => {
     setSelectedFile(file)
     setError(null)
+
+    // Parse CSV for preview
+    try {
+      const text = await file.text()
+      const rows = text.split('\n').map(row =>
+        row.split(',').map(cell => cell.trim())
+      ).filter(row => row.some(cell => cell.length > 0))
+      setCsvData(rows)
+    } catch (err) {
+      console.error('Failed to parse CSV:', err)
+      setCsvData(null)
+    }
   }
 
   const handleAnalyze = async () => {
@@ -103,30 +117,41 @@ function PortfolioUpload() {
         <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 mb-6 shadow-sm">
           <FileUploader onFileSelect={handleFileSelect} />
 
-          {selectedFile && (
-            <button
-              onClick={handleAnalyze}
-              disabled={isUploading}
-              className="w-full mt-6 px-6 py-3 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
-              style={{ backgroundColor: isUploading ? '#6b7280' : 'var(--color-mix-primary)' }}
-            >
-              {isUploading ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Analyzing...
-                </>
-              ) : (
-                'Analyze Portfolio'
-              )}
-            </button>
-          )}
-
           {error && (
             <div className="mt-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
               <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
             </div>
           )}
         </div>
+
+        {/* CSV Preview */}
+        {csvData && (
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 mb-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Data Preview
+            </h3>
+            <DataTable data={csvData} maxRows={10} />
+          </div>
+        )}
+
+        {/* Analyze Button */}
+        {selectedFile && (
+          <button
+            onClick={handleAnalyze}
+            disabled={isUploading}
+            className="w-full px-6 py-3 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+            style={{ backgroundColor: isUploading ? '#6b7280' : 'var(--color-mix-primary)' }}
+          >
+            {isUploading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Analyzing...
+              </>
+            ) : (
+              'Analyze Portfolio'
+            )}
+          </button>
+        )}
       </div>
     </div>
   )
