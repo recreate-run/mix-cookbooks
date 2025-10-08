@@ -24,6 +24,7 @@ export function StreamingChat({ sessionId, message, onComplete }: StreamingChatP
   const [isComplete, setIsComplete] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const contentEndRef = useRef<HTMLDivElement>(null)
+  const isCompleteRef = useRef(false)
 
   useEffect(() => {
     const eventSource = new EventSource(
@@ -53,13 +54,14 @@ export function StreamingChat({ sessionId, message, onComplete }: StreamingChatP
     })
 
     eventSource.addEventListener('complete', () => {
+      isCompleteRef.current = true
       setIsComplete(true)
       eventSource.close()
       onComplete?.()
     })
 
     eventSource.onerror = () => {
-      if (!isComplete) {
+      if (!isCompleteRef.current) {
         setError('Connection error')
       }
       eventSource.close()
@@ -68,7 +70,7 @@ export function StreamingChat({ sessionId, message, onComplete }: StreamingChatP
     return () => {
       eventSource.close()
     }
-  }, [sessionId, message, onComplete, isComplete])
+  }, [sessionId, message])
 
   useEffect(() => {
     contentEndRef.current?.scrollIntoView({ behavior: 'smooth' })
