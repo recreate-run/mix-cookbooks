@@ -77,7 +77,7 @@ export function StreamingChat({ sessionId, message, onComplete }: StreamingChatP
   }, [content, thinking])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* AI Response */}
       {content && (
         <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
@@ -100,7 +100,7 @@ export function StreamingChat({ sessionId, message, onComplete }: StreamingChatP
 
       {/* Charts/Media from show_media tool */}
       {tools.length > 0 && (
-        <div className="space-y-4">
+        <div className="space-y-6 mt-8">
           {tools.map((tool, index) => (
             <ChartDisplay key={index} tool={tool} />
           ))}
