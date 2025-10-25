@@ -11,7 +11,7 @@
     "demo:web-search": "bun run demos/web_search_multimodal.ts"
   },
   "dependencies": {
-    "mix-typescript-sdk": "^0.7.1",
+    "mix-typescript-sdk": "^0.8.8",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
