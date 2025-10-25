@@ -33,8 +33,8 @@ export function getMixClient(): Mix {
  */
 export async function initializeMixPreferences(mix: Mix) {
   await mix.preferences.update({
-    preferred_provider: 'anthropic',
-    main_agent_model: 'claude-sonnet-4-5',
+    preferredProvider: 'anthropic',
+    mainAgentModel: 'claude-sonnet-4-5',
   });
 }
 

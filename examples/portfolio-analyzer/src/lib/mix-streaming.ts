@@ -19,6 +19,13 @@ export interface StreamCallbacks {
   onError?: (error: string) => void
   onPermission?: (data: any) => void
   onComplete?: () => void
+  // New v0.8.x event handlers
+  onUserMessageCreated?: (data: any) => void
+  onSessionCreated?: (data: any) => void
+  onSessionDeleted?: (data: any) => void
+  onToolParameterDelta?: (data: any) => void
+  onHeartbeat?: () => void
+  onConnected?: () => void
 }
 
 /**
@@ -29,7 +36,8 @@ export async function sendWithCallbacks(
   mix: Mix,
   sessionId: string,
   message: string,
-  callbacks: StreamCallbacks = {}
+  callbacks: StreamCallbacks = {},
+  planMode = false
 ): Promise<void> {
   const {
     onThinking,
@@ -40,6 +48,12 @@ export async function sendWithCallbacks(
     onError,
     onPermission,
     onComplete,
+    onUserMessageCreated,
+    onSessionCreated,
+    onSessionDeleted,
+    onToolParameterDelta,
+    onHeartbeat,
+    onConnected,
   } = callbacks
 
   // Start the event stream
@@ -55,6 +69,7 @@ export async function sendWithCallbacks(
     id: sessionId,
     requestBody: {
       text: message,
+      planMode,
     },
   })
 
@@ -106,6 +121,42 @@ export async function sendWithCallbacks(
         case 'permission':
           if (onPermission) {
             onPermission(eventData)
+          }
+          break
+
+        case 'user_message_created':
+          if (onUserMessageCreated) {
+            onUserMessageCreated(eventData)
+          }
+          break
+
+        case 'session_created':
+          if (onSessionCreated) {
+            onSessionCreated(eventData)
+          }
+          break
+
+        case 'session_deleted':
+          if (onSessionDeleted) {
+            onSessionDeleted(eventData)
+          }
+          break
+
+        case 'tool_parameter_delta':
+          if (onToolParameterDelta) {
+            onToolParameterDelta(eventData)
+          }
+          break
+
+        case 'heartbeat':
+          if (onHeartbeat) {
+            onHeartbeat()
+          }
+          break
+
+        case 'connected':
+          if (onConnected) {
+            onConnected()
           }
           break
 
