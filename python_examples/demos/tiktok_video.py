@@ -21,9 +21,15 @@ async def main():
         session = mix.sessions.create(title="TikTok Video Demo")
 
         def handle_tool(t):
-            if t.name != CoreToolName.SHOW_MEDIA or not t.input: return
-            for o in MediaShowcaseParams.model_validate_json(t.input).outputs:
-                print(f"\n{o.title}\n   {o.description or ''}\n   {o.path or ''}\n")
+            if t.name != CoreToolName.SHOW_MEDIA: return
+            if not t.input or (isinstance(t.input, str) and not t.input.strip()): return
+
+            try:
+                params = MediaShowcaseParams.model_validate_json(t.input) if isinstance(t.input, str) else MediaShowcaseParams.model_validate(t.input)
+                for o in params.outputs:
+                    print(f"\n{o.title}\n   {o.description or ''}\n   {o.path or ''}\n")
+            except Exception:
+                pass  # Ignore parsing errors for incomplete tool calls
 
         await send_with_callbacks(
             mix,
