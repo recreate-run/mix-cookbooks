@@ -12,7 +12,7 @@
     "streaming"
   ],
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "vite dev --port 3001",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "serve": "vite preview",

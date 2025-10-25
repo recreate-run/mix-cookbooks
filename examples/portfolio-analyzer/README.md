@@ -40,7 +40,7 @@ AI-powered portfolio analysis with CSV upload, real-time streaming, and visualiz
    bun run dev
    ```
 
-The app will be available at `http://localhost:3000`
+The app will be available at `http://localhost:3001`
 
 ## How It Works
 
