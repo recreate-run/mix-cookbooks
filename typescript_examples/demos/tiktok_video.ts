@@ -16,8 +16,8 @@ async function main() {
 
   // Update preferences
   await mix.preferences.update({
-    preferred_provider: "anthropic",
-    main_agent_model: "claude-sonnet-4-5",
+    preferredProvider: "anthropic",
+    mainAgentModel: "claude-sonnet-4-5",
   });
 
   // Create session
@@ -27,7 +27,7 @@ async function main() {
 
   // Handle tool events
   function handleTool(tool: any) {
-    if (tool.name !== "show_media" || !tool.input) return;
+    if (tool.name !== "ShowMedia" || !tool.input) return;
 
     try {
       const input = typeof tool.input === "string" ? JSON.parse(tool.input) : tool.input;
