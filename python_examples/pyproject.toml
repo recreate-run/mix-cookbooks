@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Python examples for Mix SDK"
 requires-python = ">=3.10"
 dependencies = [
-    "mix-python-sdk>=0.7.0",
+    "mix-python-sdk>=0.7.1",
     "python-dotenv>=1.0.0",
 ]
 
