@@ -182,15 +182,16 @@ export async function sendWithCallbacks(
 }
 
 /**
- * Parse tool output for show_media events to extract chart/plot information.
+ * Parse tool output for ShowMedia events to extract chart/plot information.
+ * Note: In SDK v0.8.x, the tool name changed from 'show_media' to 'ShowMedia' (PascalCase)
  */
 export function parseShowMediaTool(tool: any): Array<{
   title: string
   description?: string
   path?: string
 }> {
-  // Check if this is a show_media tool
-  if (!tool || tool.name !== 'show_media') return []
+  // Check if this is a ShowMedia tool (v0.8.x uses PascalCase)
+  if (!tool || tool.name !== 'ShowMedia') return []
 
   try {
     // SDK v0.8.x sends tool.input as the raw data
@@ -208,7 +209,7 @@ export function parseShowMediaTool(tool: any): Array<{
     // Extract outputs array from the parsed input
     return parsedInput?.outputs || []
   } catch (e) {
-    console.error('Error parsing show_media tool:', e)
+    console.error('Error parsing ShowMedia tool:', e)
     return []
   }
 }
