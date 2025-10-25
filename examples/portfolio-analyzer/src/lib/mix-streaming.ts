@@ -189,12 +189,26 @@ export function parseShowMediaTool(tool: any): Array<{
   description?: string
   path?: string
 }> {
-  if (tool.name !== 'show_media' || !tool.input) return []
+  // Check if this is a show_media tool
+  if (!tool || tool.name !== 'show_media') return []
 
   try {
-    const input = typeof tool.input === 'string' ? JSON.parse(tool.input) : tool.input
-    return input.outputs || []
+    // SDK v0.8.x sends tool.input as the raw data
+    // It can be either a string (JSON) or an object
+    let parsedInput = tool.input
+
+    if (typeof tool.input === 'string') {
+      try {
+        parsedInput = JSON.parse(tool.input)
+      } catch {
+        return []
+      }
+    }
+
+    // Extract outputs array from the parsed input
+    return parsedInput?.outputs || []
   } catch (e) {
+    console.error('Error parsing show_media tool:', e)
     return []
   }
 }
