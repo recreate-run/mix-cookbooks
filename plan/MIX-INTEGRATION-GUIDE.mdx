@@ -1,0 +1,183 @@
+# Mix Cookbooks - Integration Guide
+
+## What is Mix?
+
+Mix SDK enables **autonomous AI agents** for webapps. Unlike OpenAI API (text generation only), Mix provides:
+
+- 🔍 **Search** - Autonomous web search (Brave API)
+- 📖 **ReadText** - Read files, URLs, multi-source content
+- 📸 **ReadMedia** - Vision analysis (images, PDFs, videos)
+- 🐍 **PythonExecution** - AI writes AND runs code (pandas, matplotlib)
+- 📊 **ShowMedia** - Display AI-generated visualizations
+- ⚙️ **Bash** - File operations, system commands
+
+**Key Differentiator**: AI autonomously selects and uses tools. You don't hardcode workflows—AI decides what to do.
+
+---
+
+## Our Approach: Integration, NOT Standalone Apps
+
+❌ **Wrong**: Build standalone chat interfaces (Mix Playground already does this)
+
+✅ **Right**: Show how to **add AI to existing webapp types**
+
+### Example Pattern (Shopping App)
+```
+Existing: Product grid with specs
+Integration: Select products → "Research with AI" button → Sidebar analysis
+Result: Enhanced shopping experience, not replaced
+```
+
+---
+
+## Focus Examples - Webapp Integrations
+
+### 1. CMS + AI Media Intelligence
+**Existing Webapp**: Content management system with media library
+
+**AI Integration**:
+- 📸 Smart image search by description ("sunset beach photos")
+- 🏷️ Auto-tagging uploaded images
+- ♿ Alt text generation for accessibility
+- 🔍 Find visually similar images
+
+**Mix Tools**: `ReadMedia` (vision), `PythonExecution` (similarity), `ShowMedia`
+
+**Why Agentic**: AI analyzes all images autonomously, no manual tagging
+
+---
+
+### 2. Admin Panel + Data Intelligence
+**Existing Webapp**: Admin dashboard with data tables
+
+**AI Integration**:
+- 📊 CSV analysis (upload → AI generates insights + charts)
+- 🔍 Anomaly explanation ("Why did signups drop 40%?")
+- 💬 Natural language queries ("Show users who never converted")
+- 📈 Autonomous report generation
+
+**Mix Tools**: `ReadText` (CSV), `PythonExecution` (pandas/matplotlib), `ShowMedia` (charts)
+
+**Why Agentic**: AI writes ALL analysis code. User writes 0 lines.
+
+**Key Feature**: Code viewer shows AI-generated pandas/matplotlib code
+
+---
+
+### 3. E-Commerce + Autonomous Research
+**Existing Webapp**: Shopping app with product catalog (already built)
+
+**AI Enhancement**: Add "Research Mode"
+- 🔍 AI searches web for product reviews
+- 📖 AI reads 5-10 review articles autonomously
+- 📊 Sentiment analysis across sources
+- 📈 Expert ratings aggregation
+- 🔗 Every claim cited with source URLs
+
+**Mix Tools**: `Search` + `ReadText` + `PythonExecution` + `ShowMedia` (all tools combined)
+
+**Why Agentic**: Complete autonomous workflow from search → analysis → visualization
+
+**Key Feature**: Source citations solve AI hallucination problem
+
+---
+
+## Technical Integration Pattern
+
+### Pattern: Sidebar Modal (Non-Blocking)
+```typescript
+// 1. User action in existing UI
+<Button onClick={triggerAI}>Analyze with AI</Button>
+
+// 2. Sidebar opens (keeps context visible)
+<Sidebar>
+  {/* Real-time tool visibility */}
+  <ToolProgress>
+    🔍 Searching web...
+    📖 Reading 8 sources...
+    📊 Analyzing data...
+  </ToolProgress>
+
+  {/* AI-generated results */}
+  <Results>
+    <Charts />
+    <Insights />
+    <Sources />
+  </Results>
+</Sidebar>
+
+// 3. Follow-up questions
+<Input placeholder="Ask more..." />
+```
+
+### API Routes (2 routes per example)
+```typescript
+// 1. Session creation
+POST /api/session
+→ Creates Mix session, returns session ID
+
+// 2. SSE streaming
+GET /api/stream/:sessionId?message=...
+→ Streams AI responses in real-time
+```
+
+---
+
+## Key Success Criteria
+
+Each example must:
+1. ✅ **Integrate into existing webapp** (not separate chat page)
+2. ✅ **Autonomous tool use** (AI decides which tools)
+3. ✅ **Real-time visibility** (user sees AI working)
+4. ✅ **Impossible with OpenAI alone** (requires Mix tools)
+5. ✅ **Practical for developers** (reusable patterns)
+
+---
+
+## What Makes Mix Unique
+
+| Capability | OpenAI API | Mix SDK |
+|------------|-----------|---------|
+| **Web Search** | ❌ No | ✅ Autonomous |
+| **Code Execution** | ❌ No | ✅ Writes & runs |
+| **Vision** | ⚠️ Manual input | ✅ Autonomous |
+| **Multi-Step Workflows** | ⚠️ Manual prompting | ✅ Autonomous |
+| **Citations** | ❌ No sources | ✅ Auto-cited |
+
+---
+
+## Implementation Timeline
+
+| Example | Development | Key Feature |
+|---------|-------------|-------------|
+| **Shopping Enhancement** | 10h | All tools combined |
+| **Admin Panel** | 8-12h | Code execution showcase |
+| **CMS Media** | 10-14h | Vision capabilities |
+
+**Total**: ~5-7 days
+
+---
+
+## Marketing Angle
+
+### ❌ Don't Say
+- "AI-powered chat"
+- "Smart assistant"
+- "AI helps you write code"
+
+### ✅ Do Say
+- "AI autonomously searches, reads, analyzes"
+- "AI writes and executes code itself"
+- "You wrote 0 lines, AI wrote 50+"
+- "Can't do this with just OpenAI API"
+
+---
+
+## Getting Started
+
+See individual plans:
+- `/plan/01-cms-media-intelligence.md`
+- `/plan/02-admin-data-intelligence.md`
+- `/plan/03-shopping-app-agentic-research.md`
+
+Master overview: `/plan/00-IMPLEMENTATION-PLAN.md`
