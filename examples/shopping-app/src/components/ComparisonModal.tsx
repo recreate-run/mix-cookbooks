@@ -8,8 +8,15 @@ import { Badge } from "./ui/badge";
 import { X, Send, Loader2, Sparkles, User } from "lucide-react";
 import { Input } from "./ui/input";
 
+import type { ResearchStep } from "./ResearchProgress";
+import { ResearchProgress } from "./ResearchProgress";
+import type { Source } from "./SourcesList";
+import { SourcesList } from "./SourcesList";
+import { ChartsDisplay } from "./ChartsDisplay";
+
 interface ComparisonModalProps {
 	products: Product[];
+	mode: "specs" | "research";
 	onClose: () => void;
 }
 
@@ -18,11 +25,122 @@ interface Message {
 	content: string;
 }
 
-export function ComparisonModal({ products, onClose }: ComparisonModalProps) {
+export function ComparisonModal({
+	products,
+	mode: initialMode,
+	onClose,
+}: ComparisonModalProps) {
 	const [sessionId, setSessionId] = useState<string | null>(null);
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [input, setInput] = useState("");
 	const [isStreaming, setIsStreaming] = useState(false);
+	const [mode, setMode] = useState<"specs" | "research">(initialMode);
+
+	// Research mode state
+	const [researchSteps, setResearchSteps] = useState<ResearchStep[]>([]);
+	const [sources, setSources] = useState<Source[]>([]);
+	const [charts, setCharts] = useState<string[]>([]);
+
+	// Tool tracking helper
+	const updateStepStatus = (
+		icon: string,
+		status: "pending" | "in_progress" | "complete",
+	) => {
+		setResearchSteps((prev) =>
+			prev.map((step) =>
+				step.icon === icon ? { ...step, status } : step,
+			),
+		);
+	};
+
+	const updateStepDetails = (icon: string, details: string) => {
+		setResearchSteps((prev) =>
+			prev.map((step) =>
+				step.icon === icon ? { ...step, details } : step,
+			),
+		);
+	};
+
+	// biome-ignore lint/suspicious/noExplicitAny: Tool data structure varies
+	const handleToolUse = (tool: any) => {
+		if (tool.name === "Search") {
+			updateStepStatus("🔍", "in_progress");
+			const query = tool.input?.query || "";
+			if (query) {
+				updateStepDetails("🔍", `Searching: "${query.slice(0, 50)}..."`);
+			}
+			setTimeout(() => {
+				updateStepStatus("🔍", "complete");
+				updateStepStatus("📖", "in_progress");
+			}, 1000);
+		}
+
+		if (tool.name === "ReadText") {
+			updateStepStatus("📖", "in_progress");
+			// Update count
+			setTimeout(() => {
+				setSources((prev) => {
+					updateStepDetails("📖", `Read ${prev.length} sources`);
+					return prev;
+				});
+			}, 500);
+		}
+
+		if (tool.name === "PythonExecution") {
+			const code = tool.input?.code || tool.input || "";
+
+			if (
+				code.includes("sentiment") ||
+				code.includes("positive") ||
+				code.includes("negative")
+			) {
+				updateStepStatus("📊", "in_progress");
+				updateStepDetails("📊", "Analyzing sentiment...");
+				setTimeout(() => updateStepStatus("📊", "complete"), 1500);
+			}
+
+			if (code.includes("matplotlib") || code.includes("plt.")) {
+				updateStepStatus("📈", "in_progress");
+				updateStepDetails("📈", "Creating comparison charts...");
+				setTimeout(() => updateStepStatus("📈", "complete"), 1500);
+			}
+		}
+
+		if (tool.name === "ShowMedia") {
+			updateStepStatus("📈", "complete");
+			updateStepStatus("✍️", "in_progress");
+
+			// Extract chart URLs
+			try {
+				const outputs = tool.input?.outputs || [];
+				const chartUrls = outputs
+					.filter((o: { type: string }) => o.type === "image")
+					.map((o: { url: string }) => o.url);
+
+				if (chartUrls.length > 0) {
+					setCharts((prev) => [...prev, ...chartUrls]);
+				}
+			} catch {}
+		}
+	};
+
+	// Initialize research steps for research mode
+	useEffect(() => {
+		if (mode === "research") {
+			setResearchSteps([
+				{ icon: "🔍", label: "Searching for reviews", status: "pending" },
+				{
+					icon: "📖",
+					label: "Reading sources",
+					status: "pending",
+					details: "",
+				},
+				{ icon: "📊", label: "Analyzing sentiment", status: "pending" },
+				{ icon: "📈", label: "Generating visualizations", status: "pending" },
+				{ icon: "✍️", label: "Writing synthesis", status: "pending" },
+			]);
+		}
+	}, [mode]);
 
 	// Create session and start comparison
 	useEffect(() => {
@@ -55,8 +173,10 @@ Specs:
 					)
 					.join("\n---\n");
 
-				// 3. Send initial comparison request with context
-				const prompt = `Compare these laptops in a CONCISE format with visual aids:
+				// 3. Build prompt based on mode
+				const prompt =
+					mode === "specs"
+						? `Compare these laptops in a CONCISE format with visual aids:
 
 ${productContext}
 
@@ -78,7 +198,33 @@ Create a comparison that includes:
    - ✈️ Best for Travel:
    - 💰 Best Value:
 
-Keep it CONCISE and VISUAL. Use emojis, tables, and charts to make comparisons easy to understand at a glance.`;
+Keep it CONCISE and VISUAL. Use emojis, tables, and charts to make comparisons easy to understand at a glance.`
+						: `Research and compare these products using web sources:
+
+Products:
+${products.map((p) => `- ${p.name} (${p.brand}, $${p.price})`).join("\n")}
+
+Your autonomous workflow:
+1. Use Search tool to find professional reviews for each product (search for "[product name] review 2024")
+2. Use ReadText tool to read 3-5 review articles per product from reputable tech sites
+3. Use PythonExecution tool to:
+   - Extract sentiment (positive/negative/neutral) from reviews
+   - Aggregate expert ratings if available
+   - Calculate average scores and statistics
+4. Use ShowMedia tool to generate:
+   - Sentiment comparison chart (bar chart or pie chart)
+   - Expert ratings comparison (bar chart)
+   - Pros/cons visualization
+5. Write a comprehensive synthesis with inline citations [1][2][3]
+
+Requirements:
+- Every claim must be cited with source number [1][2]
+- Provide complete source list at end with URLs
+- Compare based on REAL user/expert opinions, not just specs
+- Include sentiment analysis showing positive/negative feedback
+- Show aggregated expert ratings if found
+
+Focus on: real-world performance, value for money, reliability, user satisfaction, common issues reported.`;
 
 				// 4. Start streaming AI response
 				setIsStreaming(true);
@@ -97,9 +243,44 @@ Keep it CONCISE and VISUAL. Use emojis, tables, and charts to make comparisons e
 					}
 				});
 
+				// Track tool usage for research mode
+				if (mode === "research") {
+					eventSource.addEventListener("tool_call", (event) => {
+						const data = JSON.parse(event.data);
+						handleToolUse(data);
+					});
+
+					eventSource.addEventListener("tool_parameter_delta", (event) => {
+						const data = JSON.parse(event.data);
+						if (data.name === "ReadText" && data.parameter === "url") {
+							// Extract domain from URL for display
+							try {
+								const url = data.delta || "";
+								if (url.startsWith("http")) {
+									const domain = new URL(url).hostname.replace("www.", "");
+									setSources((prev) => [
+										...prev,
+										{ url, title: domain, status: "reading" },
+									]);
+								}
+							} catch {}
+						}
+					});
+				}
+
 				eventSource.addEventListener("complete", () => {
 					setIsStreaming(false);
 					eventSource.close();
+					if (mode === "research") {
+						// Mark all steps complete
+						setResearchSteps((prev) =>
+							prev.map((step) => ({ ...step, status: "complete" })),
+						);
+						// Mark all sources complete
+						setSources((prev) =>
+							prev.map((s) => ({ ...s, status: "complete" })),
+						);
+					}
 				});
 
 				eventSource.addEventListener("error", () => {
@@ -124,7 +305,7 @@ Keep it CONCISE and VISUAL. Use emojis, tables, and charts to make comparisons e
 		}
 
 		startComparison();
-	}, [products]);
+	}, [products, mode]);
 
 	// Handle follow-up questions
 	const handleAsk = async () => {
@@ -223,8 +404,54 @@ Keep it CONCISE and VISUAL. Use emojis, tables, and charts to make comparisons e
 						</div>
 					</div>
 
+				{/* Mode Toggle */}
+				<div className="px-4 py-3 border-b border-purple-500/20 bg-slate-950/50">
+					<div className="flex gap-2">
+						<Button
+							variant={mode === "specs" ? "default" : "outline"}
+							size="sm"
+							onClick={() => setMode("specs")}
+							disabled={isStreaming}
+							className={
+								mode === "specs"
+									? "bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white"
+									: "border-purple-500/30 text-purple-300 hover:bg-purple-900/30"
+							}
+						>
+							📊 Compare Specs (Fast)
+						</Button>
+						<Button
+							variant={mode === "research" ? "default" : "outline"}
+							size="sm"
+							onClick={() => setMode("research")}
+							disabled={isStreaming}
+							className={
+								mode === "research"
+									? "bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white"
+									: "border-purple-500/30 text-purple-300 hover:bg-purple-900/30"
+							}
+						>
+							🔍 Research with AI (Thorough)
+						</Button>
+					</div>
+					<p className="text-xs text-purple-300/50 mt-2">
+						{mode === "specs"
+							? "Quick comparison based on product specs"
+							: "In-depth research with web search, reviews, and sentiment analysis"}
+					</p>
+				</div>
+
 				{/* Messages */}
 				<div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-950/50 to-purple-950/20">
+					{/* Research Components (show when in research mode) */}
+					{mode === "research" && researchSteps.length > 0 && (
+						<>
+							<ResearchProgress steps={researchSteps} />
+							<SourcesList sources={sources} />
+							<ChartsDisplay charts={charts} />
+						</>
+					)}
+
 					{messages.map((msg, idx) => (
 						<div
 							key={idx}

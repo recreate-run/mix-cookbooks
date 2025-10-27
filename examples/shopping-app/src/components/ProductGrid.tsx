@@ -17,8 +17,13 @@ export function ProductGrid() {
 		);
 	};
 
-	const handleCompare = () => {
+	const [comparisonMode, setComparisonMode] = useState<
+		"specs" | "research" | null
+	>(null);
+
+	const handleCompare = (mode: "specs" | "research") => {
 		if (selected.length >= 2) {
+			setComparisonMode(mode);
 			setShowComparison(true);
 		}
 	};
@@ -40,17 +45,28 @@ export function ProductGrid() {
 							</p>
 						</div>
 
-						{/* Compare Button */}
-						<Button
-							onClick={handleCompare}
-							disabled={selected.length < 2}
-							size="lg"
-							className="bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-700 hover:via-fuchsia-700 hover:to-pink-700 text-white shadow-lg shadow-purple-500/30 disabled:opacity-50 transition-all"
-						>
-							{selected.length > 0
-								? `Compare (${selected.length}) with AI`
-								: "Select products to compare"}
-						</Button>
+						{/* Compare Buttons */}
+						<div className="flex gap-3">
+							<Button
+								onClick={() => handleCompare("specs")}
+								disabled={selected.length < 2}
+								size="lg"
+								variant="outline"
+								className="border-purple-500/30 text-purple-200 hover:bg-purple-900/30 hover:text-purple-100 disabled:opacity-50 transition-all"
+							>
+								📊 Compare Specs
+								{selected.length > 0 && ` (${selected.length})`}
+							</Button>
+							<Button
+								onClick={() => handleCompare("research")}
+								disabled={selected.length < 2}
+								size="lg"
+								className="bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-700 hover:via-fuchsia-700 hover:to-pink-700 text-white shadow-lg shadow-purple-500/30 disabled:opacity-50 transition-all"
+							>
+								🔍 Research with AI
+								{selected.length > 0 && ` (${selected.length})`}
+							</Button>
+						</div>
 					</div>
 
 					{/* Product Grid */}
@@ -122,10 +138,14 @@ export function ProductGrid() {
 			</div>
 
 			{/* Comparison Modal */}
-			{showComparison && (
+			{showComparison && comparisonMode && (
 				<ComparisonModal
 					products={selectedProducts}
-					onClose={() => setShowComparison(false)}
+					mode={comparisonMode}
+					onClose={() => {
+						setShowComparison(false);
+						setComparisonMode(null);
+					}}
 				/>
 			)}
 		</>

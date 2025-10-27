@@ -15,6 +15,72 @@ Mix SDK enables **autonomous AI agents** for webapps. Unlike OpenAI API (text ge
 
 ---
 
+## Mix TStack Start - Default Project Setup
+
+All examples use **Mix + TanStack Start** template for rapid development:
+
+### Pre-Configured Stack
+```
+✅ React 19 + TypeScript (strict mode)
+✅ TanStack Start (SSR framework) + Router (file-based routing)
+✅ TanStack Query (data fetching)
+✅ Mix TypeScript SDK 0.8.8 (pre-installed)
+✅ Tailwind CSS v4
+✅ 50+ Shadcn UI components (Radix UI)
+✅ Biome (linting & formatting)
+✅ Vite dev server with HMR
+```
+
+### Project Structure
+```
+example-name/
+├── src/
+│   ├── routes/
+│   │   ├── __root.tsx          # Root layout
+│   │   ├── index.tsx           # Home page
+│   │   └── api/                # API routes (create these)
+│   │       ├── session.ts      # Mix session creation
+│   │       └── stream.$sessionId.ts  # SSE streaming
+│   ├── components/
+│   │   ├── ui/                 # Shadcn components (50+)
+│   │   └── [custom]/           # Your components
+│   ├── lib/
+│   │   ├── mix-client.ts       # Mix SDK singleton (pre-configured)
+│   │   ├── mix-streaming.ts    # Streaming helpers
+│   │   └── utils.ts
+│   └── styles.css
+├── .env                         # MIX_SERVER_URL
+├── Makefile                     # Dev commands
+├── package.json
+└── CLAUDE.md                    # Dev instructions
+```
+
+### Development Commands
+```bash
+make dev          # Start dev server (auto-reload, logs to dev.log)
+make tail-log     # View last 100 lines of dev.log
+make typecheck    # TypeScript type checking
+```
+
+### Mix SDK Integration (Pre-Configured)
+```typescript
+// lib/mix-client.ts - Singleton pattern
+import { getMixClient } from "@/lib/mix-client"
+const mix = getMixClient() // Ready to use
+
+// lib/mix-streaming.ts - Streaming helpers
+import { sendWithCallbacks } from "@/lib/mix-streaming"
+```
+
+### Creating New Example
+Copy `cms-media-intelligence/` folder as template - everything is already set up:
+- Mix SDK installed and configured
+- API route patterns ready
+- Streaming utilities included
+- Shadcn UI components available
+
+---
+
 ## Our Approach: Integration, NOT Standalone Apps
 
 ❌ **Wrong**: Build standalone chat interfaces (Mix Playground already does this)

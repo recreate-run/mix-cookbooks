@@ -1,372 +1,278 @@
-# Create Mix TanStack Start
+# Shopping App with Autonomous AI Research
 
-CLI to scaffold Mix + TanStack Start projects with interactive templates.
+AI-powered laptop comparison with two modes: quick specs comparison and thorough autonomous web research.
+
+## What This Example Demonstrates
+
+This example shows how to integrate **autonomous AI research** into an e-commerce webapp. It goes beyond simple spec comparison by enabling AI to search the web, read reviews, analyze sentiment, and provide cited recommendations.
+
+### Two Comparison Modes
+
+**📊 Compare Specs (Fast)**
+- Quick comparison based on local product specs
+- ASCII charts and ratings
+- Best for: Quick decisions, known products
+- Time: ~5-10 seconds
+
+**🔍 Research with AI (Thorough)**
+- Autonomous web search for reviews
+- Reads 5-10 professional review articles
+- Sentiment analysis across sources
+- AI-generated comparison charts
+- Every claim cited with source URLs
+- Best for: Thorough research, fact-checking
+- Time: ~30-60 seconds
+
+## Key Features
+
+### Autonomous Tool Usage
+The AI autonomously decides which tools to use:
+- **Search** - Finds professional reviews (TechRadar, CNET, The Verge, etc.)
+- **ReadText** - Reads review articles to extract opinions
+- **PythonExecution** - Analyzes sentiment, aggregates ratings
+- **ShowMedia** - Generates comparison charts (sentiment, ratings)
+
+### Real-Time Research Visibility
+Users see the AI working in real-time:
+```
+🔍 Searching for MacBook Pro M3 reviews...
+📖 Reading TechRadar: MacBook Pro M3 Review
+📖 Reading CNET: Is the MacBook Pro M3 Worth It?
+📊 Analyzing sentiment across 6 sources...
+📈 Generating comparison charts...
+✍️ Writing synthesis with citations...
+```
+
+### Citation System
+Every claim is backed by sources:
+> Based on 6 professional reviews, the MacBook Pro M3 receives consistently higher praise [1][2][3]. TechRadar notes "exceptional M3 chip performance" [1].
+>
+> **Sources:**
+> 1. [TechRadar: MacBook Pro M3 Review](https://techradar.com/...)
+> 2. [CNET: Is the MacBook Pro M3 Worth It?](https://cnet.com/...)
+
+This solves the AI hallucination problem - every recommendation is verifiable.
+
+## Tech Stack
+
+- **Frontend**: React 19 + TypeScript + TanStack Start
+- **UI**: Tailwind CSS v4 + Shadcn components
+- **AI**: Mix SDK v0.8.8 (autonomous agents)
+- **Streaming**: Server-Sent Events (SSE)
 
 ## Quick Start
 
-Create a new project using the CLI:
+### Prerequisites
+- Bun installed (`curl -fsSL https://bun.sh/install | bash`)
+- Mix server running (see below)
+
+### Run the App
 
 ```bash
-npm create mix-tstart@latest
-# or
-npx create-mix-tstart@latest
-# or
-pnpm create mix-tstart@latest
-# or
-bun create mix-tstart@latest
+# Install dependencies
+bun install
+
+# Start dev server
+make dev
+
+# View logs
+make tail-log
 ```
 
-You can also specify a project name directly:
+Visit `http://localhost:3000`
 
+### Start Mix Server
+
+In a separate terminal:
 ```bash
-npm create mix-tstart@latest my-app
+cd /path/to/mix
+make dev
 ```
 
-The CLI will prompt you to:
-1. Choose a template (base or examples)
-2. Select a package manager (bun, npm, pnpm, yarn)
-3. Install dependencies automatically
+The app connects to Mix server at `http://localhost:8088` (configured in `.env`)
 
-## Templates
+## How It Works
 
-- **Base** - Minimal TanStack Start starter with Shadcn/ui components
-- **Portfolio Analyzer** (coming soon) - Full example with file upload, AI streaming, and visualizations
+### Architecture
+
+```
+User selects products → Two action buttons appear
+                         ↓
+              ┌──────────┴─────────┐
+              ↓                     ↓
+    📊 Compare Specs      🔍 Research with AI
+    (Fast, local data)    (Thorough, web research)
+              ↓                     ↓
+         ComparisonModal opens with selected mode
+              ↓
+    Creates Mix session → Sends prompt → Streams response
+              ↓
+    Shows real-time tool usage & results
+```
+
+### Integration Pattern: Sidebar Modal
+
+The comparison opens in a **right-side sidebar** (not a full-page modal):
+- ✅ Non-blocking - keeps product grid visible
+- ✅ Real-time streaming updates
+- ✅ Follow-up questions capability
+- ✅ Easy to close and select different products
+
+### Research Mode Tool Flow
+
+1. **User clicks "Research with AI"** on 2-3 selected products
+2. **AI searches web** autonomously for "[product name] review 2024"
+3. **AI reads 5-10 articles** from reputable tech sites
+4. **AI analyzes sentiment** using Python (positive/negative/neutral)
+5. **AI generates charts** (sentiment comparison, expert ratings)
+6. **AI writes synthesis** with inline citations [1][2][3]
+7. **Sources displayed** with clickable URLs
+
+### Code Structure
+
+```
+src/
+├── components/
+│   ├── ProductGrid.tsx           # Product selection + action buttons
+│   ├── ComparisonModal.tsx       # Main comparison UI with 2 modes
+│   ├── ResearchProgress.tsx      # Real-time research step tracker
+│   ├── SourcesList.tsx           # Displays URLs AI read
+│   └── ChartsDisplay.tsx         # Shows AI-generated visualizations
+├── routes/
+│   └── api/
+│       ├── session.ts            # Creates Mix session
+│       └── stream.$sessionId.ts  # SSE streaming endpoint
+├── data/
+│   └── products.ts               # Laptop data (6 products)
+└── lib/
+    ├── mix-client.ts             # Mix SDK singleton
+    └── mix-streaming.ts          # Streaming helpers
+```
 
 ## Development
 
-If you're running this locally (for development):
-
 ```bash
-bun install
-bun run dev
+# Start dev server (auto-reload)
+make dev
+
+# View logs
+make tail-log
+
+# Run type checking
+make typecheck
+
+# Format code
+make format
 ```
 
-## Testing CLI Locally
+## Why This Example Matters
 
-To test the CLI locally before publishing:
+### Problem It Solves
 
-```bash
-npm link
-# Now you can run the CLI from anywhere
-create-mix-tstart my-test-app
-```
+**Traditional e-commerce limitation**: Product pages only show specs and maybe a few cherry-picked testimonials. Users have to manually:
+1. Google "[product name] review"
+2. Open 10+ tabs
+3. Read multiple reviews
+4. Try to remember key points
+5. Manually compare findings
 
-To unlink:
+**This example automates all of that** - AI does the research, reading, analysis, and comparison.
 
-```bash
-npm unlink -g create-mix-tstart
-```
+### Specs Mode vs Research Mode
 
-## Publishing
+| Aspect | Specs Mode | Research Mode |
+|--------|------------|---------------|
+| **Data Source** | Local product data | Web reviews + specs |
+| **Speed** | ~5 seconds | ~30-60 seconds |
+| **Tools Used** | None (just AI reasoning) | Search, ReadText, PythonExecution, ShowMedia |
+| **Output** | Spec comparison table, ASCII charts | Sentiment analysis, expert ratings, cited synthesis |
+| **Trust** | Based on manufacturer specs | Based on real expert/user opinions |
+| **Citations** | None | Every claim cited [1][2][3] |
+| **Use Case** | Quick spec check | Thorough buying decision |
 
-To publish this package to npm:
+### What Makes It Agentic
 
-1. Update version in `package.json`
-2. Login to npm: `npm login`
-3. Publish: `npm publish`
+This isn't just "AI chat" - it's autonomous multi-step research:
 
-Users can then use it with:
+1. **AI decides what to search** (doesn't need explicit instructions)
+2. **AI selects reputable sources** (TechRadar, CNET, not random blogs)
+3. **AI reads full articles** (not just snippets)
+4. **AI writes analysis code** (sentiment extraction, rating aggregation)
+5. **AI generates visualizations** (matplotlib charts)
+6. **AI synthesizes findings** (not just copy-paste)
 
-```bash
-npm create mix-tstart@latest
-```
+**You can't do this with ChatGPT/Claude alone** - no web search, no code execution, no visualizations.
 
-# Building For Production
+## Impossible with OpenAI Alone
 
-To build this application for production:
+This example requires Mix because:
 
-```bash
-bun --bun run build
-```
+- ❌ OpenAI API: No web search
+- ❌ OpenAI API: No code execution
+- ❌ OpenAI API: No visualization generation
+- ✅ Mix SDK: All of the above + autonomous tool orchestration
 
-## Testing
+## Key Integration Patterns
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+### Pattern 1: Two-Mode Button
 
-```bash
-bun --bun run test
-```
-
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-
-## Linting & Formatting
-
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
-
-
-```bash
-bun --bun run lint
-bun --bun run format
-bun --bun run check
-```
-
-
-## Shadcn
-
-Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
-
-```bash
-pnpx shadcn@latest add button
-```
-
-
-
-## Routing
-This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add another a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
+Instead of replacing existing functionality, **add AI as enhancement**:
 
 ```tsx
-import { Link } from "@tanstack/react-router";
+<Button onClick={() => handleCompare("specs")}>
+  📊 Compare Specs (Fast)
+</Button>
+<Button onClick={() => handleCompare("research")}>
+  🔍 Research with AI (Thorough)
+</Button>
 ```
 
-Then anywhere in your JSX you can use it like so:
+Users choose when to use AI (for important decisions) vs quick comparisons.
+
+### Pattern 2: Real-Time Tool Visibility
+
+Show users what AI is doing (builds trust):
 
 ```tsx
-<Link to="/about">About</Link>
+{mode === "research" && (
+  <>
+    <ResearchProgress steps={researchSteps} />
+    <SourcesList sources={sources} />
+    <ChartsDisplay charts={charts} />
+  </>
+)}
 ```
 
-This will create a link that will navigate to the `/about` route.
+Users see:
+- 🔍 Which searches AI ran
+- 📖 Which articles AI read (with URLs)
+- 📊 When AI is analyzing data
+- 📈 Charts AI generated
 
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
+### Pattern 3: Citation Tracking
 
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you use the `<Outlet />` component.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-
-import { Link } from "@tanstack/react-router";
-
-export const Route = createRootRoute({
-  component: () => (
-    <>
-      <header>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-        </nav>
-      </header>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
-```
-
-The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
+Track sources as AI reads them:
 
 ```tsx
-const peopleRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/people",
-  loader: async () => {
-    const response = await fetch("https://swapi.dev/api/people");
-    return response.json() as Promise<{
-      results: {
-        name: string;
-      }[];
-    }>;
-  },
-  component: () => {
-    const data = peopleRoute.useLoaderData();
-    return (
-      <ul>
-        {data.results.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    );
-  },
+eventSource.addEventListener("tool_parameter_delta", (event) => {
+  if (data.name === "ReadText" && data.parameter === "url") {
+    setSources(prev => [...prev, {
+      url: data.delta,
+      title: extractDomain(data.delta),
+      status: "reading"
+    }]);
+  }
 });
 ```
 
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+Then AI includes citations in output: "According to TechRadar [1]..."
 
-### React-Query
+## Learn More
 
-React-Query is an excellent addition or alternative to route loading and integrating it into you application is a breeze.
+- **Mix SDK**: [Documentation](https://recreate.run/docs/mix)
+- **TanStack Start**: [Documentation](https://tanstack.com/start)
+- **Shadcn UI**: [Components](https://ui.shadcn.com)
 
-First add your dependencies:
+## License
 
-```bash
-bun install @tanstack/react-query @tanstack/react-query-devtools
-```
-
-Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
-
-```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-// ...
-
-const queryClient = new QueryClient();
-
-// ...
-
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-
-  root.render(
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  );
-}
-```
-
-You can also add TanStack Query Devtools to the root route (optional).
-
-```tsx
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      <ReactQueryDevtools buttonPosition="top-right" />
-      <TanStackRouterDevtools />
-    </>
-  ),
-});
-```
-
-Now you can use `useQuery` to fetch your data.
-
-```tsx
-import { useQuery } from "@tanstack/react-query";
-
-import "./App.css";
-
-function App() {
-  const { data } = useQuery({
-    queryKey: ["people"],
-    queryFn: () =>
-      fetch("https://swapi.dev/api/people")
-        .then((res) => res.json())
-        .then((data) => data.results as { name: string }[]),
-    initialData: [],
-  });
-
-  return (
-    <div>
-      <ul>
-        {data.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default App;
-```
-
-You can find out everything you need to know on how to use React-Query in the [React-Query documentation](https://tanstack.com/query/latest/docs/framework/react/overview).
-
-## State Management
-
-Another common requirement for React applications is state management. There are many options for state management in React. TanStack Store provides a great starting point for your project.
-
-First you need to add TanStack Store as a dependency:
-
-```bash
-bun install @tanstack/store
-```
-
-Now let's create a simple counter in the `src/App.tsx` file as a demonstration.
-
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store } from "@tanstack/store";
-import "./App.css";
-
-const countStore = new Store(0);
-
-function App() {
-  const count = useStore(countStore);
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-    </div>
-  );
-}
-
-export default App;
-```
-
-One of the many nice features of TanStack Store is the ability to derive state from other state. That derived state will update when the base state updates.
-
-Let's check this out by doubling the count using derived state.
-
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store, Derived } from "@tanstack/store";
-import "./App.css";
-
-const countStore = new Store(0);
-
-const doubledStore = new Derived({
-  fn: () => countStore.state * 2,
-  deps: [countStore],
-});
-doubledStore.mount();
-
-function App() {
-  const count = useStore(countStore);
-  const doubledCount = useStore(doubledStore);
-
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-      <div>Doubled - {doubledCount}</div>
-    </div>
-  );
-}
-
-export default App;
-```
-
-We use the `Derived` class to create a new store that is derived from another store. The `Derived` class has a `mount` method that will start the derived store updating.
-
-Once we've created the derived store we can use it in the `App` component just like we would any other store using the `useStore` hook.
-
-You can find out everything you need to know on how to use TanStack Store in the [TanStack Store documentation](https://tanstack.com/store/latest).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+MIT
