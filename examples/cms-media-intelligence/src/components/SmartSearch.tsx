@@ -31,7 +31,7 @@ export function SmartSearch({ onSearch, isSearching }: SmartSearchProps) {
 		<div className="space-y-4">
 			<div className="flex gap-3">
 				<div className="flex-1 relative">
-					<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+					<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
 					<Input
 						type="text"
 						value={query}
@@ -42,7 +42,7 @@ export function SmartSearch({ onSearch, isSearching }: SmartSearchProps) {
 								? 'Try "sunset beach" or "team working together"'
 								: "Search by filename or tags..."
 						}
-						className="pl-11 pr-24 bg-slate-900/50 border-slate-700/50 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20"
+						className="pl-11 pr-24 "
 						disabled={isSearching}
 					/>
 					{query && (
@@ -50,7 +50,7 @@ export function SmartSearch({ onSearch, isSearching }: SmartSearchProps) {
 							size="sm"
 							variant="ghost"
 							onClick={handleClear}
-							className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+							className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
 						>
 							<X className="w-4 h-4" />
 						</Button>
@@ -59,7 +59,7 @@ export function SmartSearch({ onSearch, isSearching }: SmartSearchProps) {
 				<Button
 					onClick={handleSearch}
 					disabled={!query.trim() || isSearching}
-					className="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white shadow-lg shadow-purple-500/30 disabled:opacity-50"
+					className=""
 				>
 					{isSearching ? (
 						<>
@@ -75,7 +75,7 @@ export function SmartSearch({ onSearch, isSearching }: SmartSearchProps) {
 				</Button>
 			</div>
 
-			<div className="flex items-center justify-between p-3 bg-slate-900/30 border border-slate-700/30 rounded-lg">
+			<div className="flex items-center justify-between p-3 bg-card border rounded-lg">
 				<div className="flex items-center gap-3">
 					<Switch
 						id="ai-search"
@@ -86,21 +86,21 @@ export function SmartSearch({ onSearch, isSearching }: SmartSearchProps) {
 					<div>
 						<Label
 							htmlFor="ai-search"
-							className="text-sm font-medium text-white cursor-pointer"
+							className="text-sm font-medium text-foreground cursor-pointer"
 						>
 							{aiEnabled ? (
 								<span className="flex items-center gap-2">
-									<Sparkles className="w-4 h-4 text-purple-400" />
+									<Sparkles className="w-4 h-4 text-primary" />
 									AI-Powered Search
 								</span>
 							) : (
 								<span className="flex items-center gap-2">
-									<Search className="w-4 h-4 text-slate-400" />
+									<Search className="w-4 h-4 text-muted-foreground" />
 									Basic Search
 								</span>
 							)}
 						</Label>
-						<p className="text-xs text-slate-400 mt-0.5">
+						<p className="text-xs text-muted-foreground mt-0.5">
 							{aiEnabled
 								? "Search by visual content and descriptions"
 								: "Search by filename and tags only"}

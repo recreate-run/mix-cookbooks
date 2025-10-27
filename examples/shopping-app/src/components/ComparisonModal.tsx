@@ -363,20 +363,20 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 
 			{/* Sidebar */}
 			<div className="fixed right-0 top-0 h-full w-full md:w-[600px] lg:w-[700px] z-50 animate-in slide-in-from-right duration-300">
-				<Card className="h-full bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950 border-l border-purple-500/20 shadow-2xl shadow-purple-500/10 rounded-none flex flex-col overflow-hidden">
+				<Card className="h-full border-l rounded-none flex flex-col overflow-hidden">
 					{/* Header */}
-					<div className="relative p-6 border-b border-purple-500/20 bg-gradient-to-r from-purple-950/30 via-slate-900/50 to-fuchsia-950/30">
+					<div className="relative p-6 border-b">
 						<div className="flex justify-between items-start">
 							<div className="flex-1">
 								<div className="flex items-center gap-3 mb-3">
-									<div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 shadow-lg shadow-purple-500/50">
-										<Sparkles className="w-5 h-5 text-white" />
+									<div className="p-2 rounded-lg bg-primary">
+										<Sparkles className="w-5 h-5 text-primary-foreground" />
 									</div>
 									<div>
-										<h2 className="text-xl font-bold bg-gradient-to-r from-purple-200 via-fuchsia-200 to-pink-200 bg-clip-text text-transparent">
+										<h2 className="text-xl font-bold text-foreground">
 											AI Product Comparison
 										</h2>
-										<p className="text-xs text-purple-300/70 mt-0.5">
+										<p className="text-xs text-muted-foreground mt-0.5">
 											Powered by Mix AI
 										</p>
 									</div>
@@ -386,7 +386,7 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 										<Badge
 											key={product.id}
 											variant="secondary"
-											className="bg-purple-900/30 text-purple-200 border-purple-500/30 px-2 py-0.5 text-xs hover:bg-purple-900/40 transition-colors"
+											className="px-2 py-0.5 text-xs"
 										>
 											{product.name}
 										</Badge>
@@ -397,7 +397,6 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 								variant="ghost"
 								size="icon"
 								onClick={onClose}
-								className="text-purple-300/70 hover:text-purple-100 hover:bg-purple-900/30"
 							>
 								<X className="w-5 h-5" />
 							</Button>
@@ -405,18 +404,13 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 					</div>
 
 				{/* Mode Toggle */}
-				<div className="px-4 py-3 border-b border-purple-500/20 bg-slate-950/50">
+				<div className="px-4 py-3 border-b bg-muted">
 					<div className="flex gap-2">
 						<Button
 							variant={mode === "specs" ? "default" : "outline"}
 							size="sm"
 							onClick={() => setMode("specs")}
 							disabled={isStreaming}
-							className={
-								mode === "specs"
-									? "bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white"
-									: "border-purple-500/30 text-purple-300 hover:bg-purple-900/30"
-							}
 						>
 							📊 Compare Specs (Fast)
 						</Button>
@@ -425,16 +419,11 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 							size="sm"
 							onClick={() => setMode("research")}
 							disabled={isStreaming}
-							className={
-								mode === "research"
-									? "bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white"
-									: "border-purple-500/30 text-purple-300 hover:bg-purple-900/30"
-							}
 						>
 							🔍 Research with AI (Thorough)
 						</Button>
 					</div>
-					<p className="text-xs text-purple-300/50 mt-2">
+					<p className="text-xs text-muted-foreground mt-2">
 						{mode === "specs"
 							? "Quick comparison based on product specs"
 							: "In-depth research with web search, reviews, and sentiment analysis"}
@@ -442,7 +431,7 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 				</div>
 
 				{/* Messages */}
-				<div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-950/50 to-purple-950/20">
+				<div className="flex-1 overflow-y-auto p-4 space-y-4">
 					{/* Research Components (show when in research mode) */}
 					{mode === "research" && researchSteps.length > 0 && (
 						<>
@@ -458,15 +447,15 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 							className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
 						>
 							{msg.role === "assistant" && (
-								<div className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
-									<Sparkles className="w-3.5 h-3.5 text-white" />
+								<div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary flex items-center justify-center">
+									<Sparkles className="w-3.5 h-3.5 text-primary-foreground" />
 								</div>
 							)}
 							<div
-								className={`max-w-[85%] rounded-2xl shadow-lg ${
+								className={`max-w-[85%] rounded-2xl ${
 									msg.role === "user"
-										? "bg-gradient-to-br from-fuchsia-600 to-pink-600 text-white shadow-fuchsia-500/20"
-										: "bg-slate-900/90 text-slate-100 border border-purple-500/20 shadow-purple-500/10"
+										? "bg-primary text-primary-foreground"
+										: "bg-card text-card-foreground border"
 								}`}
 							>
 								<div className="px-5 py-4">
@@ -476,13 +465,13 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 										</p>
 										{isStreaming && idx === messages.length - 1 && (
 											<div className="flex gap-1">
-												<span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+												<span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
 												<span
-													className="w-1.5 h-1.5 rounded-full bg-fuchsia-400 animate-pulse"
+													className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
 													style={{ animationDelay: "0.2s" }}
 												/>
 												<span
-													className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse"
+													className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
 													style={{ animationDelay: "0.4s" }}
 												/>
 											</div>
@@ -490,7 +479,7 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 									</div>
 									<div className="text-sm whitespace-pre-wrap leading-relaxed">
 										{msg.content || (
-											<span className="text-purple-300/60 italic">
+											<span className="text-muted-foreground italic">
 												Thinking...
 											</span>
 										)}
@@ -498,8 +487,8 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 								</div>
 							</div>
 							{msg.role === "user" && (
-								<div className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-fuchsia-600 to-pink-600 flex items-center justify-center shadow-lg shadow-fuchsia-500/30">
-									<User className="w-3.5 h-3.5 text-white" />
+								<div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary flex items-center justify-center">
+									<User className="w-3.5 h-3.5 text-primary-foreground" />
 								</div>
 							)}
 						</div>
@@ -508,16 +497,16 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 					{isStreaming && messages.length === 0 && (
 						<div className="flex flex-col items-center justify-center py-16 space-y-4">
 							<div className="relative">
-								<div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 flex items-center justify-center shadow-2xl shadow-purple-500/50">
-									<Sparkles className="w-7 h-7 text-white" />
+								<div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center">
+									<Sparkles className="w-7 h-7 text-primary-foreground" />
 								</div>
-								<div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 animate-ping opacity-20" />
+								<div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
 							</div>
 							<div className="text-center space-y-2">
-								<p className="text-base font-semibold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
+								<p className="text-base font-semibold text-foreground">
 									Analyzing products...
 								</p>
-								<p className="text-xs text-purple-300/60">
+								<p className="text-xs text-muted-foreground">
 									AI is comparing specs, features, and value
 								</p>
 							</div>
@@ -526,13 +515,13 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 				</div>
 
 				{/* Input for follow-up questions */}
-				<div className="p-4 border-t border-purple-500/20 bg-gradient-to-r from-purple-950/30 via-slate-900/50 to-fuchsia-950/30">
+				<div className="p-4 border-t">
 					<div className="flex items-start gap-2 mb-3">
 						<div className="flex-1">
-							<p className="text-xs font-medium text-purple-200 mb-1">
+							<p className="text-xs font-medium text-foreground mb-1">
 								Ask follow-up questions
 							</p>
-							<p className="text-xs text-purple-300/50">
+							<p className="text-xs text-muted-foreground">
 								Try: "Which is best for gaming?" or "Compare battery life"
 							</p>
 						</div>
@@ -544,13 +533,12 @@ Focus on: real-world performance, value for money, reliability, user satisfactio
 							onChange={(e) => setInput(e.target.value)}
 							onKeyDown={(e) => e.key === "Enter" && !isStreaming && handleAsk()}
 							placeholder="Ask a question..."
-							className="flex-1 bg-slate-900/50 border-purple-500/30 text-white placeholder:text-purple-300/40 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all text-sm"
+							className="flex-1 text-sm"
 							disabled={isStreaming}
 						/>
 						<Button
 							onClick={handleAsk}
 							disabled={isStreaming || !input.trim()}
-							className="bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-700 hover:via-fuchsia-700 hover:to-pink-700 text-white shadow-lg shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
 						>
 							<Send className="w-4 h-4" />
 						</Button>

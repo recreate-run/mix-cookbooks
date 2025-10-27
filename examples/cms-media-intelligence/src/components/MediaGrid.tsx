@@ -48,9 +48,9 @@ export function MediaGrid({
 		<div className="space-y-6">
 			{/* Bulk Actions */}
 			{selected.length > 0 && (
-				<div className="sticky top-4 z-10 bg-gradient-to-r from-purple-900/90 via-fuchsia-900/90 to-purple-900/90 backdrop-blur-sm border border-purple-500/30 rounded-lg p-4 shadow-lg shadow-purple-500/20">
+				<div className="sticky top-4 z-10 bg-card/90 backdrop-blur-sm border rounded-lg p-4">
 					<div className="flex items-center justify-between">
-						<p className="text-purple-100 font-medium">
+						<p className="text-foreground font-medium">
 							{selected.length} image{selected.length !== 1 ? "s" : ""}{" "}
 							selected
 						</p>
@@ -59,7 +59,6 @@ export function MediaGrid({
 								onClick={() => setSelected([])}
 								variant="outline"
 								size="sm"
-								className="border-purple-500/30 text-purple-200 hover:bg-purple-800/30"
 							>
 								Clear Selection
 							</Button>
@@ -67,7 +66,6 @@ export function MediaGrid({
 								<Button
 									onClick={handleAnalyzeSelected}
 									size="sm"
-									className="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white shadow-lg shadow-purple-500/30"
 								>
 									<Sparkles className="w-4 h-4 mr-2" />
 									Analyze with AI
@@ -77,7 +75,7 @@ export function MediaGrid({
 								<Button
 									onClick={handleGenerateAltText}
 									size="sm"
-									className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg shadow-blue-500/30"
+									variant="secondary"
 								>
 									<Type className="w-4 h-4 mr-2" />
 									Generate Alt Text
@@ -95,13 +93,13 @@ export function MediaGrid({
 						key={item.id}
 						className={`group cursor-pointer transition-all overflow-hidden ${
 							selected.includes(item.id)
-								? "ring-4 ring-purple-500 bg-gradient-to-br from-slate-900/90 to-purple-950/50 border-purple-500/50 shadow-purple-500/20"
-								: "bg-slate-900/50 hover:bg-slate-900/70 border-slate-700/30 hover:border-purple-500/30"
+								? "ring-4 ring-primary"
+								: "hover:border-ring"
 						}`}
 						onClick={() => toggleSelect(item.id)}
 					>
 						{/* Image */}
-						<div className="relative aspect-square overflow-hidden bg-slate-800">
+						<div className="relative aspect-square overflow-hidden bg-muted">
 							<img
 								src={item.thumbnailUrl}
 								alt={item.altText || item.filename}
@@ -114,12 +112,12 @@ export function MediaGrid({
 								<div
 									className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
 										selected.includes(item.id)
-											? "bg-gradient-to-br from-purple-500 to-pink-500 border-purple-500 shadow-lg shadow-purple-500/30"
-											: "border-white/50 bg-black/30 group-hover:border-purple-500/50"
+											? "bg-primary border-primary"
+											: "border-white/50 bg-black/30 group-hover:border-ring"
 									}`}
 								>
 									{selected.includes(item.id) && (
-										<Check className="w-4 h-4 text-white" />
+										<Check className="w-4 h-4 text-primary-foreground" />
 									)}
 								</div>
 							</div>
@@ -128,7 +126,7 @@ export function MediaGrid({
 							<div className="absolute top-2 right-2">
 								<Badge
 									variant="secondary"
-									className="bg-black/50 text-white border-white/20 backdrop-blur-sm text-xs"
+									className="bg-black/50 text-foreground border-white/20 backdrop-blur-sm text-xs"
 								>
 									{item.category}
 								</Badge>
@@ -141,7 +139,7 @@ export function MediaGrid({
 										<Button
 											size="sm"
 											variant="secondary"
-											className="flex-1 text-xs bg-black/50 hover:bg-black/70 text-white border-white/20"
+											className="flex-1 text-xs bg-black/50 hover:bg-black/70 text-foreground border-white/20"
 											onClick={(e) => {
 												e.stopPropagation();
 												onFindSimilar(item.id);
@@ -158,10 +156,10 @@ export function MediaGrid({
 						{/* Metadata */}
 						<div className="p-3 space-y-2">
 							<div>
-								<h3 className="font-medium text-white text-sm truncate">
+								<h3 className="font-medium text-foreground text-sm truncate">
 									{item.filename}
 								</h3>
-								<p className="text-xs text-slate-400">
+								<p className="text-xs text-muted-foreground">
 									{formatFileSize(item.size)} • {formatDate(item.uploadDate)}
 								</p>
 							</div>
@@ -173,7 +171,7 @@ export function MediaGrid({
 										<Badge
 											key={tag}
 											variant="secondary"
-											className="bg-purple-900/30 text-purple-200 border-purple-500/30 text-xs px-1.5 py-0"
+											className="bg-secondary text-secondary-foreground text-xs px-1.5 py-0"
 										>
 											{tag}
 										</Badge>
@@ -181,7 +179,7 @@ export function MediaGrid({
 									{item.tags.length > 3 && (
 										<Badge
 											variant="secondary"
-											className="bg-slate-700/30 text-slate-400 border-slate-600/30 text-xs px-1.5 py-0"
+											className="bg-muted text-muted-foreground text-xs px-1.5 py-0"
 										>
 											+{item.tags.length - 3}
 										</Badge>
@@ -204,13 +202,13 @@ export function MediaGrid({
 			{/* Empty State */}
 			{media.length === 0 && (
 				<div className="text-center py-16">
-					<div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800 mb-4">
-						<Sparkles className="w-8 h-8 text-slate-500" />
+					<div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
+						<Sparkles className="w-8 h-8 text-muted-foreground" />
 					</div>
-					<h3 className="text-lg font-semibold text-white mb-2">
+					<h3 className="text-lg font-semibold text-foreground mb-2">
 						No media found
 					</h3>
-					<p className="text-slate-400">
+					<p className="text-muted-foreground">
 						Upload images or try a different search
 					</p>
 				</div>

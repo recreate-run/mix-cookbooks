@@ -110,19 +110,19 @@ function App() {
 	const selectedImages = media.filter((m) => selectedIds.includes(m.id));
 
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+		<div className="min-h-screen bg-background">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 				{/* Header */}
 				<div className="mb-8">
 					<div className="flex items-center gap-3 mb-2">
-						<div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 shadow-lg shadow-purple-500/50">
-							<ImageIcon className="w-6 h-6 text-white" />
+						<div className="p-2 rounded-lg bg-primary">
+							<ImageIcon className="w-6 h-6 text-primary-foreground" />
 						</div>
 						<div>
-							<h1 className="text-3xl font-bold bg-gradient-to-r from-purple-200 via-fuchsia-200 to-pink-200 bg-clip-text text-transparent">
+							<h1 className="text-3xl font-bold text-foreground">
 								Media Library
 							</h1>
-							<p className="text-slate-400 text-sm">
+							<p className="text-muted-foreground text-sm">
 								AI-powered content management with smart search, auto-tagging,
 								and visual similarity
 							</p>
@@ -137,29 +137,29 @@ function App() {
 
 				{/* Stats */}
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-					<div className="p-4 bg-slate-900/50 border border-slate-700/30 rounded-lg">
-						<p className="text-sm text-slate-400">Total Media</p>
-						<p className="text-2xl font-bold text-white">
+					<div className="p-4 bg-card border rounded-lg">
+						<p className="text-sm text-muted-foreground">Total Media</p>
+						<p className="text-2xl font-bold text-primary-foreground">
 							{searchQuery ? media.length : sampleMedia.length}
 						</p>
 					</div>
-					<div className="p-4 bg-slate-900/50 border border-slate-700/30 rounded-lg">
-						<p className="text-sm text-slate-400">With Alt Text</p>
-						<p className="text-2xl font-bold text-white">
+					<div className="p-4 bg-card border rounded-lg">
+						<p className="text-sm text-muted-foreground">With Alt Text</p>
+						<p className="text-2xl font-bold text-primary-foreground">
 							{(searchQuery ? media : sampleMedia).filter((m) => m.altText)
 								.length}
 						</p>
 					</div>
-					<div className="p-4 bg-slate-900/50 border border-slate-700/30 rounded-lg">
-						<p className="text-sm text-slate-400">Categories</p>
-						<p className="text-2xl font-bold text-white">5</p>
+					<div className="p-4 bg-card border rounded-lg">
+						<p className="text-sm text-muted-foreground">Categories</p>
+						<p className="text-2xl font-bold text-primary-foreground">5</p>
 					</div>
 				</div>
 
 				{/* Results Info */}
 				{searchQuery && (
-					<div className="mb-6 flex items-center gap-2 text-sm text-slate-300">
-						<Sparkles className="w-4 h-4 text-purple-400" />
+					<div className="mb-6 flex items-center gap-2 text-sm text-foreground">
+						<Sparkles className="w-4 h-4 text-primary" />
 						<span>
 							Found {media.length} result{media.length !== 1 ? "s" : ""} for "
 							{searchQuery}"

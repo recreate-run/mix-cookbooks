@@ -194,20 +194,20 @@ Use ReadMedia tool to analyze each image visually.`;
 
 			{/* Sidebar */}
 			<div className="fixed right-0 top-0 h-full w-full md:w-[600px] lg:w-[700px] z-50 animate-in slide-in-from-right duration-300">
-				<Card className="h-full bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950 border-l border-purple-500/20 shadow-2xl shadow-purple-500/10 rounded-none flex flex-col overflow-hidden">
+				<Card className="h-full border-l rounded-none flex flex-col overflow-hidden">
 					{/* Header */}
-					<div className="relative p-6 border-b border-purple-500/20 bg-gradient-to-r from-purple-950/30 via-slate-900/50 to-fuchsia-950/30">
+					<div className="relative p-6 border-b">
 						<div className="flex justify-between items-start">
 							<div className="flex-1">
 								<div className="flex items-center gap-3 mb-2">
-									<div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 via-fuchsia-500 to-pink-500 shadow-lg shadow-purple-500/50">
-										<Sparkles className="w-5 h-5 text-white" />
+									<div className="p-2 rounded-lg bg-primary">
+										<Sparkles className="w-5 h-5 text-primary-foreground" />
 									</div>
 									<div>
-										<h2 className="text-xl font-bold bg-gradient-to-r from-purple-200 via-fuchsia-200 to-pink-200 bg-clip-text text-transparent">
+										<h2 className="text-xl font-bold text-foreground">
 											AI Image Analysis
 										</h2>
-										<p className="text-xs text-purple-300/70 mt-0.5">
+										<p className="text-xs text-muted-foreground mt-0.5">
 											Analyzing {images.length} image{images.length !== 1 ? "s" : ""}
 										</p>
 									</div>
@@ -217,7 +217,6 @@ Use ReadMedia tool to analyze each image visually.`;
 								variant="ghost"
 								size="icon"
 								onClick={onClose}
-								className="text-purple-300/70 hover:text-purple-100 hover:bg-purple-900/30"
 							>
 								<X className="w-5 h-5" />
 							</Button>
@@ -227,10 +226,10 @@ Use ReadMedia tool to analyze each image visually.`;
 						{isAnalyzing && (
 							<div className="mt-4 space-y-2">
 								<div className="flex items-center justify-between text-sm">
-									<span className="text-purple-200">
+									<span className="text-foreground">
 										Analyzing image {currentIndex + 1} of {images.length}
 									</span>
-									<span className="text-purple-300">{Math.round(progress)}%</span>
+									<span className="text-muted-foreground">{Math.round(progress)}%</span>
 								</div>
 								<Progress value={progress} className="h-2" />
 							</div>
@@ -241,18 +240,18 @@ Use ReadMedia tool to analyze each image visually.`;
 					<div className="flex-1 overflow-y-auto p-6 space-y-4">
 						{error && (
 							<Card className="p-4 bg-red-900/20 border-red-500/30">
-								<p className="text-red-200 text-sm">{error}</p>
+								<p className="text-destructive text-sm">{error}</p>
 							</Card>
 						)}
 
 						{/* Completion Message - Show at top when done */}
 						{!isAnalyzing && results.length > 0 && (
 							<Card className="p-3 bg-green-900/20 border-green-500/30">
-								<div className="flex items-center gap-2 text-green-200">
+								<div className="flex items-center gap-2 text-green-600 dark:text-green-400">
 									<CheckCircle className="w-4 h-4" />
 									<div>
 										<p className="text-sm font-medium">Analysis Complete!</p>
-										<p className="text-xs text-green-300/70">
+										<p className="text-xs text-green-600/70 dark:text-green-400/70">
 											Analyzed {results.length} image{results.length !== 1 ? "s" : ""} and generated tags
 										</p>
 									</div>
@@ -267,10 +266,10 @@ Use ReadMedia tool to analyze each image visually.`;
 									key={image.id}
 									className={`p-2 transition-all ${
 										index === currentIndex && isAnalyzing
-											? "ring-2 ring-purple-500 bg-slate-900/70"
+											? "ring-2 ring-primary"
 											: index < currentIndex
-												? "bg-slate-900/50"
-												: "bg-slate-900/30 opacity-60"
+												? "bg-muted"
+												: "bg-muted/50 opacity-60"
 									}`}
 								>
 									<div className="flex items-start gap-3">
@@ -282,17 +281,17 @@ Use ReadMedia tool to analyze each image visually.`;
 											/>
 											{index < currentIndex && (
 												<div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
-													<CheckCircle className="w-5 h-5 text-green-400" />
+													<CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
 												</div>
 											)}
 											{index === currentIndex && isAnalyzing && (
-												<div className="absolute inset-0 bg-purple-500/20 flex items-center justify-center">
-													<Loader2 className="w-5 h-5 text-purple-400 animate-spin" />
+												<div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
+													<Loader2 className="w-5 h-5 text-primary animate-spin" />
 												</div>
 											)}
 										</div>
 										<div className="flex-1 min-w-0">
-											<p className="text-xs font-medium text-white truncate mb-1">
+											<p className="text-xs font-medium text-foreground truncate mb-1">
 												{image.filename}
 											</p>
 											{results[index] && results[index].tags.length > 0 && (
@@ -301,7 +300,7 @@ Use ReadMedia tool to analyze each image visually.`;
 														<Badge
 															key={tag}
 															variant="secondary"
-															className="bg-purple-900/30 text-purple-200 border-purple-500/30 text-xs px-1.5 py-0"
+															className="text-xs px-1.5 py-0"
 														>
 															{tag}
 														</Badge>
@@ -318,19 +317,19 @@ Use ReadMedia tool to analyze each image visually.`;
 						{aiResponse && !isAnalyzing && (
 							<details className="group">
 								<summary className="cursor-pointer list-none">
-									<Card className="p-3 bg-slate-900/50 border-purple-500/20 hover:bg-slate-900/70 transition-colors">
+									<Card className="p-3 hover:bg-muted transition-colors">
 										<div className="flex items-center justify-between">
-											<h3 className="text-sm font-semibold text-purple-200">
+											<h3 className="text-sm font-semibold text-foreground">
 												View Raw Analysis
 											</h3>
-											<span className="text-purple-300 text-xs group-open:rotate-180 transition-transform">
+											<span className="text-muted-foreground text-xs group-open:rotate-180 transition-transform">
 												▼
 											</span>
 										</div>
 									</Card>
 								</summary>
-								<Card className="mt-2 p-3 bg-slate-900/50 border-purple-500/20">
-									<div className="text-xs text-slate-300 whitespace-pre-wrap max-h-48 overflow-y-auto">
+								<Card className="mt-2 p-3">
+									<div className="text-xs text-foreground whitespace-pre-wrap max-h-48 overflow-y-auto">
 										{aiResponse}
 									</div>
 								</Card>
@@ -339,10 +338,10 @@ Use ReadMedia tool to analyze each image visually.`;
 					</div>
 
 					{/* Footer */}
-					<div className="p-4 border-t border-purple-500/20 bg-slate-950/50">
+					<div className="p-4 border-t">
 						<Button
 							onClick={onClose}
-							className="w-full bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white"
+							className="w-full"
 							disabled={isAnalyzing}
 						>
 							{isAnalyzing ? (
