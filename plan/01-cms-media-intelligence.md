@@ -324,3 +324,89 @@ onTool: (tool) => {
 2. Blog post: "Building AI Image Search with Mix SDK"
 3. Tweet: Code snippet showing ReadMedia integration
 4. GitHub: Tag as "vision-ai", "cms", "image-search"
+
+---
+
+## Marketing & Social Media
+
+### Core Message
+**"I added AI image tagging to my CMS in 30 lines of code"**
+
+### Twitter/X Thread (3 tweets)
+```
+🧵 I just added AI vision to my CMS.
+
+Search images by description ("sunset beach")
+Auto-tag images on upload
+Generate alt text for accessibility
+
+30 lines of code with Mix SDK's ReadMedia.
+
+Here's what it does 👇
+
+---
+
+THE FEATURES:
+
+1. Smart Search: "Find sunset photos" → AI analyzes all images
+2. Auto-Tagging: Upload image → AI suggests tags (mountain, snow, landscape)
+3. Alt Text: Bulk generate accessibility descriptions
+4. All powered by ReadMedia vision tool
+
+No manual image labeling needed.
+
+---
+
+THE CODE:
+
+const prompt = `Analyze this image and suggest tags:
+@${imageUrl}
+
+Identify: objects, scene type, colors, mood
+
+Return JSON with tags array`
+
+// AI uses ReadMedia to analyze
+// Returns: ["mountain", "snow", "sunset", "landscape"]
+
+Demo: github.com/recreate-run/mix-cookbooks
+```
+
+### LinkedIn Post
+```
+🚀 Built AI vision into my CMS
+
+- Search media by description
+- Auto-tag images on upload
+- Generate accessibility alt text
+- Analyze 24 images in seconds
+
+The key: Mix SDK's ReadMedia tool gives AI vision capabilities.
+AI analyzes image content and suggests relevant tags.
+
+No third-party APIs. No manual labeling.
+
+Demo: github.com/recreate-run/mix-cookbooks
+```
+
+### Demo Video (30 seconds)
+**Show:**
+1. Select 1-2 images from grid
+2. Click "Analyze with AI"
+3. Sidebar shows: "Analyzing image..."
+4. Tags appear: mountain, snow-capped peaks, clouds, sunset
+5. All tags displayed in compact layout
+
+**Caption:**
+"AI image tagging in 30 lines. Upload → AI analyzes → Suggests tags. Vision-powered CMS. #AI #CMS"
+
+### Recording Checklist
+- [ ] Screen at 1920x1080, browser zoomed to 125%
+- [ ] Show media grid with 24 images
+- [ ] Select 1 image
+- [ ] Click "Analyze with AI"
+- [ ] Capture analysis progress
+- [ ] Show generated tags appearing
+- [ ] Demo "Generate Alt Text" feature
+- [ ] Keep video under 60 seconds
+

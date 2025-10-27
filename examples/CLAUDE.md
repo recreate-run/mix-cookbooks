@@ -372,29 +372,67 @@ pnpx shadcn@latest add [component-name]
 
 ### Color Scheme
 
-**Use Tailwind's slate palette for dark themes:**
+**IMPORTANT: Always use shadcn semantic colors - NEVER hardcode colors**
+
+Shadcn provides semantic color classes that automatically adapt to the theme.
+**Never use hardcoded colors like `slate-900`, `purple-600`, `blue-400`, etc.**
+
+**Semantic Color Classes:**
 ```typescript
-// Background gradients
-className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"
+// Backgrounds
+className="bg-background"           // Main background
+className="bg-card"                 // Card backgrounds
+className="bg-popover"              // Popover backgrounds
+className="bg-muted"                // Muted backgrounds
 
-// Cards
-className="bg-slate-800 border-slate-700"
+// Foregrounds (Text)
+className="text-foreground"         // Primary text
+className="text-muted-foreground"   // Secondary/muted text
+className="text-card-foreground"    // Text on cards
+className="text-popover-foreground" // Text in popovers
 
-// Text
-className="text-white"           // Primary text
-className="text-slate-400"       // Secondary text
-className="text-slate-300"       // Muted text
+// Interactive Elements
+className="bg-primary text-primary-foreground"       // Primary buttons/actions
+className="bg-secondary text-secondary-foreground"   // Secondary buttons
+className="bg-accent text-accent-foreground"         // Accent highlights
+className="bg-destructive text-destructive-foreground" // Delete/danger actions
 
-// Accents
-className="bg-blue-600 hover:bg-blue-700"  // Primary actions
-className="text-blue-400"                   // Accent text
+// Borders & Inputs
+className="border-border"           // Standard borders
+className="ring-ring"               // Focus rings
+className="bg-input"                // Input backgrounds
+```
+
+**Example Usage:**
+```typescript
+// ❌ WRONG - Don't use hardcoded colors
+<Card className="bg-slate-900 border-slate-700">
+  <h2 className="text-purple-400">Title</h2>
+  <p className="text-slate-300">Content</p>
+  <Button className="bg-blue-600 hover:bg-blue-700">Click</Button>
+</Card>
+
+// ✅ CORRECT - Use shadcn semantic colors
+<Card>
+  <h2 className="text-foreground">Title</h2>
+  <p className="text-muted-foreground">Content</p>
+  <Button>Click</Button> {/* Primary colors applied by default */}
+</Card>
+```
+
+**For Success/Warning/Error States:**
+```typescript
+// Use semantic colors with intent
+className="text-green-600 dark:text-green-400"  // Success (if needed beyond primary)
+className="text-yellow-600 dark:text-yellow-400" // Warning
+className="text-destructive"                    // Error/danger
 ```
 
 ### Layout Patterns
 
-**Full-page with gradient:**
+**Full-page layout:**
 ```typescript
-<div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 p-8">
+<div className="min-h-screen bg-background p-8">
   <div className="max-w-7xl mx-auto">
     {/* Content */}
   </div>
@@ -403,11 +441,27 @@ className="text-blue-400"                   // Accent text
 
 **Modal overlay:**
 ```typescript
-<div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+<div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
   <Card className="w-full max-w-4xl h-[700px] flex flex-col">
     {/* Modal content */}
   </Card>
 </div>
+```
+
+**Card layout:**
+```typescript
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description text</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-muted-foreground">Content goes here</p>
+  </CardContent>
+  <CardFooter>
+    <Button>Action</Button>
+  </CardFooter>
+</Card>
 ```
 
 ### Icons

@@ -527,3 +527,89 @@ Dell XPS 15:     4.2/5 (3 reviews)
 - ✅ Clear value prop: Cited, evidence-based recommendations
 
 This makes shopping-app our **flagship integration example** that showcases everything Mix can do.
+
+---
+
+## Marketing & Social Media
+
+### Core Message
+**"I added AI product research to my e-commerce site in 50 lines of code"**
+
+### Twitter/X Thread (3 tweets)
+```
+🧵 I just added autonomous AI research to my shopping app.
+
+AI searches the web, reads 8+ reviews, analyzes sentiment, and generates charts.
+
+It took 50 lines of code with Mix SDK.
+
+Here's how it works 👇
+
+---
+
+THE WORKFLOW:
+
+User clicks "Research with AI"
+→ AI searches for "[product] review 2024"
+→ Reads TechRadar, CNET, The Verge, PCMag
+→ Runs Python sentiment analysis
+→ Generates matplotlib charts
+→ Returns cited recommendations [1][2][3]
+
+All autonomous. No API orchestration.
+
+---
+
+THE CODE:
+
+const prompt = `Research these products:
+1. Search for reviews
+2. Read 3-5 articles each  
+3. Analyze sentiment
+4. Generate charts
+5. Cite all sources`
+
+That's it. AI figures out the workflow.
+
+Full demo: github.com/recreate-run/mix-cookbooks
+```
+
+### LinkedIn Post
+```
+🚀 Built autonomous product research into my shopping app
+
+- AI searches 8+ review sources
+- Analyzes sentiment with Python
+- Generates comparison charts
+- Cites every claim [1][2][3]
+- 50 lines of code
+
+The key: Mix SDK gives AI tools (Search, ReadText, Python, ShowMedia).
+AI autonomously decides when/how to use them.
+
+No manual API orchestration needed.
+
+Demo: github.com/recreate-run/mix-cookbooks
+```
+
+### Demo Video (30 seconds)
+**Show:**
+1. Select 2 products
+2. Click "Research with AI" button
+3. Real-time progress: "Searching... Reading... Analyzing..."
+4. Charts appear with sentiment analysis
+5. Cited recommendations with source links
+
+**Caption:**
+"AI product research in 50 lines. AI reads reviews, analyzes sentiment, generates charts. All autonomous. #AI #WebDev"
+
+### Recording Checklist
+- [ ] Screen at 1920x1080, browser zoomed to 125%
+- [ ] Show product selection
+- [ ] Click "Research with AI" button
+- [ ] Capture real-time progress indicators
+- [ ] Show sources list populating
+- [ ] Display charts being generated
+- [ ] Highlight inline citations [1][2][3]
+- [ ] Keep video under 60 seconds
+
