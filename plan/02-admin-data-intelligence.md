@@ -475,6 +475,75 @@ Full code: https://github.com/recreate-run/mix-cookbooks
 #BuildInPublic #AI #DataAnalysis #TypeScript
 ```
 
+### Twitter/X Thread (5 tweets)
+```
+Tweet 1 (Hook):
+I just added AI data analysis to an admin dashboard.
+
+Upload CSV → AI writes Python → Charts appear in real-time.
+
+40 lines of code with Mix SDK.
+
+Here's what it does 👇
+
+---
+
+Tweet 2 (Problem):
+The old way:
+• Export to Excel
+• Write formulas manually
+• Create charts one by one
+• Hours of tedious work
+
+The new way:
+• Upload CSV
+• Ask in English: "show me Q4 signups"
+• AI generates insights + visualizations
+• Seconds, not hours
+
+---
+
+Tweet 3 (Features):
+What makes it powerful:
+
+✅ Natural language queries
+✅ Real-time chart generation
+✅ Shows AI-generated Python code
+✅ Full scrollable results
+✅ Follow-up questions work
+
+AI wrote 523 lines of pandas/matplotlib.
+I wrote 0 lines. 🎉
+
+---
+
+Tweet 4 (Code):
+The integration:
+
+const prompt = `Analyze this CSV: @${fileUrl}
+
+Use pandas to:
+1. Load and clean data
+2. Generate visualizations
+3. Identify insights
+
+Show your Python code!`
+
+Mix SDK handles execution, streaming, and chart display.
+
+---
+
+Tweet 5 (CTA):
+We're not saying "replace data analysts."
+
+We're saying "admins shouldn't need pandas to analyze their data."
+
+Full working code + demo:
+github.com/recreate-run/mix-cookbooks
+
+#BuildInPublic #AI #DataAnalysis #TypeScript
+```
+
 ### Demo Video (60 seconds)
 **Show:**
 1. [0-10s] Upload sales_2024.csv, click "Analyze with AI"
