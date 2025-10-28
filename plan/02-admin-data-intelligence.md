@@ -433,3 +433,64 @@ This reinforces the core value prop: **AI writes the implementation.**
 2. Blog post: "I Added Data Analysis to My Admin Panel in 2 Hours"
 3. Tweet: Side-by-side (Excel manual vs AI automated)
 4. GitHub: Tag "data-analysis", "admin-dashboard", "ai-analytics"
+
+---
+
+## Marketing & Social Media
+
+### Core Message
+**"I added AI data analysis to my admin panel. Admins ask questions in English. AI writes the Python code. Users see charts. Zero analysis code written."**
+
+### LinkedIn Post
+```
+I just added AI data analysis to an admin dashboard.
+
+Upload CSV → AI writes Python → Charts appear in real-time.
+
+Admin Data Intelligence features:
+• Natural language queries ("show me Q4 signups")
+• Real-time chart generation as AI analyzes
+• AI-generated code viewer (523 lines written, 0 by me)
+• Full scrollable results with all visualizations
+
+Total integration: ~40 lines with Mix SDK.
+
+The old way:
+Export to Excel → Write formulas → Create charts manually → Hours of work
+
+The new way:
+Upload CSV → Ask in English → Get insights instantly
+
+Mix SDK provides:
+→ PythonExecution (AI writes & runs pandas/matplotlib)
+→ ShowMedia (displays charts in real-time)
+→ Session context (multi-turn conversations)
+
+We're not saying "replace data analysts."
+
+We're saying "admins shouldn't need pandas to analyze their data."
+
+Full code: https://github.com/recreate-run/mix-cookbooks
+
+#BuildInPublic #AI #DataAnalysis #TypeScript
+```
+
+### Demo Video (60 seconds)
+**Show:**
+1. [0-10s] Upload sales_2024.csv, click "Analyze with AI"
+2. [10-25s] Sidebar shows real-time tool execution
+3. [25-40s] Charts appear one by one during streaming
+4. [40-50s] Scroll to show all results visible
+5. [50-60s] Expand code viewer: "AI wrote 523 lines. You wrote 0."
+
+**Caption:**
+"AI data analysis in 40 lines. Upload CSV → AI writes Python → See charts in real-time. #AI #DataAnalysis"
+
+### Recording Checklist
+- [ ] Screen at 1920x1080, browser zoomed to 125%
+- [ ] Show dashboard with sample metrics
+- [ ] Upload CSV and trigger analysis
+- [ ] Capture real-time chart appearances (3-4 charts)
+- [ ] Show full scrolling of results
+- [ ] Expand code viewer showing Python code
+- [ ] Keep under 60 seconds
