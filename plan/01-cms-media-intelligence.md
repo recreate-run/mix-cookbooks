@@ -372,21 +372,43 @@ Return JSON with tags array`
 Demo: github.com/recreate-run/mix-cookbooks
 ```
 
-### LinkedIn Post
+### LinkedIn Post as a Founder
 ```
-🚀 Built AI vision into my CMS
+"How hard is it to add AI vision to a webapp?"
 
-- Search media by description
-- Auto-tag images on upload
-- Generate accessibility alt text
-- Analyze 24 images in seconds
+ We shipped a working example in 2 hours to find out.
 
-The key: Mix SDK's ReadMedia tool gives AI vision capabilities.
-AI analyzes image content and suggests relevant tags.
+ CMS Media Intelligence features:
+ • Smart image search by description
+ • Auto-tagging on upload
+ • Bulk alt text generation
+ • Real-time analysis progress
 
-No third-party APIs. No manual labeling.
+ Total Mix SDK integration code: ~30 lines.
 
-Demo: github.com/recreate-run/mix-cookbooks
+ Getting started takes 3 commands:
+
+ bun create mix-tstart@latest
+ cd my-app
+ bun dev
+
+ The SDK gives you:
+ → ReadMedia for vision (analyze images)
+ → Search for web research
+ → PythonExecution for data processing
+ → Multi-model routing (Claude/Gemini/OpenAI)
+
+ All with streaming, session management, and tool execution built-in.
+
+ We're not saying "this is the future of AI integration."
+
+ We're saying "this is how simple it should be TODAY."
+
+ Full working code: https://lnkd.in/gTxfHZQE
+ 
+Try it. Break it. Ship it.
+
+#BuildInPublic #AI #TypeScript #OpenSource
 ```
 
 ### Demo Video (30 seconds)
